@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>.NET Assembly File Format | CoreCLR site</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content=".NET Assembly File Format | CoreCLR site">
+    
+    <link rel="shortcut icon" href="../../images/Logo_DotNet.png" type="image/x-icon">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/style.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="">
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-63735192-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+  </head>  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <a href="../../"><img height="50px" src="../../images/Logo_DotNet.png" style="float:right;"></a>
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../../"><span class="dotnet">.NET Core</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content">
+              <a href="https://github.com/dotnet/core-docs/blob/master/docs/concepts/assembly-format.md/#L1" class="pull-right mobile-hide"><span class="fa fa-github"></span> Improve this Doc</a>
+              <h1 id="-net-assembly-file-format">.NET Assembly File Format</h1>
+              
+<p>The .NET platform defines a binary file format - “assembly” - that is used to fully-describe and contain .NET programs. Assemblies are used for the programs themselves as well as any dependent libraries. A .NET program can be executed as one of more assemblies, with no other required artifacts, beyond the appropriate .NET runtime. Native dependencies, including operating system APIs, are a separate concern and are not contained within the .NET assembly format, although are sometimes described with this format (e.g. WinRT).</p>
+<blockquote><p>Each CLI component carries the metadata for declarations, implementations, and references specific to that component. Therefore, the component-specific metadata is referred to as component metadata, and the resulting component is said to be self-describing – from ECMA 335 I.9.1, Components and assemblies.</p>
+</blockquote>
+<p>The format is fully specified and standardized as ECMA 335. All .NET compilers and runtimes use this format. The presense of a documented and infrequently updated binary format has been a major benefit (arguably a requirement) for interoperatibility. The format was last updated in a substantive way in 2005 (.NET 2.0) to accomodate generics and processor architecture.</p>
+<p>The format is CPU- and OS-agnostic. It has been used as part of .NET runtimes that target many chips and CPUs. While the format itself has Windows heritage, it is implementable on any operating system. It’s arguably most significant choice for OS interopertability is that most values are stored in little-endian format. It doesn’t have a specific affinity to machine pointer size (e.g. 32-bit, 64-bit).</p>
+<p>The .NET assembly format is also very descriptive about the structure of a given program or library. It describes the internal components of an assembly, specifically: assembly references and types defined and their internal structure. Tools or APIs can read and process this information for display or to make programmatic decisions.</p>
+<h2 id="format">Format</h2>
+<p>The .NET binary format is based on the Windows <a href="http://en.wikipedia.org/wiki/Portable_Executable">PE file</a> format. In fact, .NET class libraries are conformant Windows PEs, and appear on first glance to be Windows dynamic link libraries (DLLs) or application executables (EXEs). This is a very useful characteristic on Windows, where they can masquerade as native executable binaries and get some of the same treatment (e.g. OS load, PE tools).</p>
+<p><img src="../images/assembly-headers.png" alt="../images/assembly-headers.png"></p>
+<p>Assembly Headers Assemblies headers from ECMA 335 II.25.1, Structure of the runtime file format.</p>
+<h2 id="processing-the-assemblies">Processing the Assemblies</h2>
+<p>It is possible to write tools or APIs to process assemblies. Assembly information enables making programmatic decisions at runtime, re-writing assemblies, providing API intellisense in an editor and generating documentation. <a href="https://msdn.microsoft.com/library/system.reflection.aspx">System.Reflection</a> and <a href="http://www.mono-project.com/docs/tools+libraries/libraries/Mono.Cecil/">Mono.Cecil</a> are good examples of tools that are frequently used for this purpose.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+            <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="inner-footer">
+          <p>© .NET Foundation</p>
+          <p>
+            <a href="https://www.github.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-github fa-stack-1x"></span>
+            </span></a>
+            <a href="https://twitter.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-twitter fa-stack-1x"></span>
+            </span></a>
+            <a href="https://www.facebook.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-facebook fa-stack-1x"></span>
+            </span></a>
+      
+          </p>
+          </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>

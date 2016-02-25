@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Asynchronous programming | CoreCLR site</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Asynchronous programming | CoreCLR site">
+    
+    <link rel="shortcut icon" href="../../../images/Logo_DotNet.png" type="image/x-icon">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/style.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-63735192-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+  </head>  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <a href="../../../"><img height="50px" src="../../../images/Logo_DotNet.png" style="float:right;"></a>
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../../../"><span class="dotnet">.NET Core</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content">
+        
+        <div class="sidenav">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content">
+              <a href="https://github.com/dotnet/core-docs/blob/master/docs/languages/csharp/async.md/#L1" class="pull-right mobile-hide"><span class="fa fa-github"></span> Improve this Doc</a>
+              <h1 id="asynchronous-programming">Asynchronous programming</h1>
+              
+<p>By <a href="https://github.com/cartermp">Phillip Carter</a></p>
+<p>C# and Visual Basic share a language-level asynchronous programming model which allows for easily writing asynchronous code without having to juggle callbacks or conform to a library which supports asynchrony. It follows what is known as the <a href="https://msdn.microsoft.com/en-us/library/hh873175%28v=vs.110%29.aspx">Task-based Asynchronous Pattern (TAP)</a>.</p>
+<p>The core of TAP are the <code>Task</code> and <code>Task&lt;T&gt;</code> objects, which model asynchronous operations, supported by the <code>async</code> and <code>await</code> keywords (<code>Async</code> and <code>Await</code> in VB), which provide a natural developer experience for interacting with Tasks. The result is the ability to write asynchronous code which cleanly expresses intent, as opposed to callbacks which express intent far less cleanly. There are other ways to approach async code than <code>async</code> and <code>await</code> outlined in the TAP article linked above, but this document will focus on the language-level constructs from this point forward.</p>
+<p>For example, you may need to download some data from a web service when a button is pressed, but don’t want to block the UI thread. It can be accomplished simply like this:</p>
+<pre><code class="lang-cs">private readonly HttpClient _httpClient = new HttpClient();
+
+...
+
+button.Clicked += async (o, e) =&gt;
+{
+    var stringData = await _httpClient.DownloadStringAsync(URL);
+    DoStuff(stringData);
+};
+</code></pre>
+<p>And that’s it! The code expresses the intent (downloading some data asynchronously) without getting bogged down in interacting with Task objects.</p>
+<p>For those who are more theoretically-inclined, this is an implementation of the <a href="https://en.wikipedia.org/wiki/Futures_and_promises">Future/Promise concurrency model</a>.</p>
+<p>A few important things to know before continuing:</p>
+<ul>
+<li>Async code uses <code>Task&lt;T&gt;</code> and <code>Task</code>, which are constructs used to model the work being done in an asynchronous context. <a href="#more-on-task-and-task-t">More on Task and Task<t></t></a></li>
+<li>When the <code>await</code> keyword is applied, it suspends the calling method and yields control back to its caller until the awaited task is complete. This is what allows a UI to be responsive and a service to be elastic.</li>
+<li><code>await</code> can only be used inside an async method.</li>
+<li>Unless an async method has an <code>await</code> inside its body, it will never yield!</li>
+<li><code>async void</code> should <strong>only</strong> be used on Event Handlers (where it is required).</li>
+</ul>
+<h2 id="example-c-">Example (C#)</h2>
+<p>The following example shows how to write basic async code for both a client app and a web service. The code, in both cases, will count the number of times ”.NET” appears in the HTML of “dotnetfoundation.org”.</p>
+<p>Client app snippet (Universal Windows App):</p>
+<pre><code class="lang-cs">private readonly HttpClient _httpClient = new HttpClient();
+
+private async void SeeTheDotNets_Click(object sender, RoutedEventArgs e)
+{
+    // Capture the task handle here so we can await the background task later.
+    var getDotNetFoundationHtmlTask = _httpClient.GetStringAsync(&quot;http://www.dotnetfoundation.org&quot;);
+
+    // Any other work on the UI thread can be done here, such as enabling a Progress Bar.
+    // This is important to do here, before the &quot;await&quot; call, so that the user
+    // sees the progress bar before execution of this method is yielded.
+    NetworkProgressBar.IsEnabled = true;
+    NetworkProgressBar.Visibility = Visibility.Visible;
+
+    // The await operator suspends SeeTheDotNets_Click, returning control to its caller.
+    // This is what allows the app to be responsive and not hang on the UI thread.
+    var html = await getDotNetFoundationHtmlTask;
+    int count = Regex.Matches(html, &quot;.NET&quot;).Count;
+
+    DotNetCountLabel.Text = $&quot;Number of .NETs on dotnetfoundation.org: {count}&quot;;
+
+    NetworkProgressBar.IsEnabled = false;
+    NetworkProgressBar.Visbility = Visibility.Collapsed;
+}
+</code></pre>
+<p>Web service snippet (ASP.NET MVC):</p>
+<pre><code class="lang-cs">private readonly HttpClient _httpClient = new HttpClient();
+
+[HttpGet]
+[Route(&quot;DotNetCount&quot;)]
+public async Task&lt;int&gt; GetDotNetCountAsync()
+{
+    // Suspends GetDotNetCountAsync() to allow the caller (the web server)
+    // to accept another request, rather than blocking on this one.
+    var html = await _httpClient.DownloadStringAsync(&quot;http://dotnetfoundation.org&quot;);
+
+    return Regex.Matches(html, &quot;.NET&quot;).Count;
+}
+</code></pre>
+<h2 id="more-on-task-and-task-t-">More on Task and Task<t></t></h2>
+<p>As mentioned before, Tasks are constructs used to represent operations working in the background.</p>
+<ul>
+<li><code>Task</code> represents a single operation which does not return a value.</li>
+<li><code>Task&lt;T&gt;</code> represents a single operation which returns a value of type <code>T</code>.</li>
+</ul>
+<p>Tasks are awaitable, meaning that using <code>await</code> will allow your application or service to perform useful work while the task is running by yielding control to its caller until the task is done. If you’re using <code>Task&lt;T&gt;</code>, the <code>await</code> keyword will additionally “unwrap” the value returned when the Task is complete.</p>
+<p>It’s important to reason about Tasks as abstractions of work happening in the background, and <em>not</em> an abstraction over multithreading. In fact, unless explicitly started on a new thread via <code>Task.Run</code>, a Task will start on the current thread and delegate work to the Operating System.</p>
+<p>Here’s a 10,000 foot view of what happens with a typical async call:</p>
+<p>The call (such as <code>GetStringAsync</code> from <code>HttpClient</code>) makes its way through the .NET libraries until it reaches a system interop call (such as <code>P/Invoke</code> on Windows). This eventually makes the proper System API call (such as <code>write</code> to a socket file descriptor on Linux). That System API call is then dealt with in the kernel, where the I/O request is sent to the proper subsystem. Although details about scheduling the work on the appropriate device driver are different for each OS, eventually an “incomplete task” signal will be sent from the device driver, bubbling its way back up to the .NET runtime. This will be converted into a <code>Task</code> or <code>Task&lt;T&gt;</code> by the runtime and returned to the calling method. When <code>await</code> is encountered, execuction is yielded and the system can go do something else useful while the Task is running.</p>
+<p>When the device driver has the data, it sends an interrupt which eventually allows the OS to bubble the result back up to the runtime, which will the queue up the result of the Task. Eventually execution will return to the method which called <code>GetStringAsync</code> at the <code>await</code>, and will “unwrap” the return value from the <code>Task&lt;string&gt;</code> which was being awaited. The method now has the result!</p>
+<p>Although many details were glossed over (such as how “borrowing” compute time on a thread pool is coordinated), the important thing to recognize here is that <strong>no thread is 100% dedicated to running the initiated task</strong>. This allows threads in the thread pool of a system to handle a larger volume of work rather than having to wait for I/O to finish.</p>
+<p>Although the above may seem like a lot of work to be done, when measured in terms of wall clock time, it’s miniscule compared to the time it takes to do the actual I/O work. Although not at all precise, a potential timeline for such a call would look like this:</p>
+<p>0-1————————————————————————————————————————————————–2-3</p>
+<ul>
+<li>Time spent from points <code>0</code> to <code>1</code> is everything up until an async method yields control to its caller.</li>
+<li>Time spent from points <code>1</code> to <code>2</code> is the time spent on I/O.</li>
+<li>Finally, time spent from points <code>2</code> to <code>3</code> is passing control back (and potentially a value) to the async method, at which point it is executing again.</li>
+</ul>
+<p>Tasks are also used outside of the async programming model. They are the foundation of the Task Parallel Library, which supports the parallelization of CPU-bound work via <a href="https://msdn.microsoft.com/en-us/library/dd537608%28v=vs.110%29.aspx">Data Parallelism</a> and <a href="https://msdn.microsoft.com/en-us/library/dd537609%28v=vs.110%29.aspx">Task Parallelism</a>.</p>
+<h2 id="important-info-and-advice">Important Info and Advice</h2>
+<p>Although async programming is relatively straightforward, there are some details to keep in mind which can prevent unexpected behavior.</p>
+<ul>
+<li><strong>You should add “Async” as the suffix of every async method name you write.</strong></li>
+</ul>
+<p>This is the convention used in .NET to more-easily differentiate synchronous and asynchronous methods. Note that certain methods which aren’t explicitly called by your code (such as event handlers or web controller methods) don’t necessarily apply. Because these are not explicitly called by your code, being explicit about their naming isn’t as important.</p>
+<ul>
+<li><code>async void</code> <strong>should only be used for event handlers.</strong></li>
+</ul>
+<p><code>async void</code> is the only way to allow asynchronous event handlers to work because events do not have return types (thus cannot make use of <code>Task</code> and <code>Task&lt;T&gt;</code>). Any other use of <code>`async void</code> does not follow the TAP model and can be challenging to use, such as:</p>
+<ul>
+<li>Exceptions thrown in an <code>async void</code> method can’t be caught outside of that method.</li>
+<li><code>async void</code> methods are very difficult to test.</li>
+<li><code>async void</code> methods can cause bad side effects if the caller isn’t expecting them to be async.</li>
+</ul>
+<ul>
+<li><strong>Tread carefully when using async lambdas in LINQ expressions</strong></li>
+</ul>
+<p>Lambda expressions in LINQ use deferred execution, meaning code could end up executing at a time when you’re not expecting it to. The introduction of blocking tasks into this can easily result in a deadlock if not written correctly. Additionally, the nesting of asynchronous code like this can also make it more difficult to reason about the execution of the code. Async and LINQ are powerful, but should be used together as carefully and clearly as possible.</p>
+<ul>
+<li><strong>Write code that awaits Tasks in a non-blocking manner</strong></li>
+</ul>
+<p>Blocking the current thread as a means to wait for a Task to complete can result in deadlocks and blocked context threads, and can require significantly more complex error-handling. The following table provides guidance on how to deal with waiting for Tasks in a non-blocking way:</p>
+<table>
+<thead>
+<tr>
+<th>Use this...</th>
+<th>Instead of this...</th>
+<th>When wishing to do this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>await</code></td>
+<td><code>Task.Wait</code> or <code>Task.Result</code></td>
+<td>Retrieving the result of a background task</td>
+</tr>
+<tr>
+<td><code>await Task.WhenAny</code></td>
+<td><code>Task.WaitAny</code></td>
+<td>Waiting for any task to complete</td>
+</tr>
+<tr>
+<td><code>await Task.WhenAll</code></td>
+<td><code>Task.WaitAll</code></td>
+<td>Waiting for all tasks to complete</td>
+</tr>
+<tr>
+<td><code>await Task.Delay</code></td>
+<td><code>Thread.Sleep</code></td>
+<td>Waiting for a period of time</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Write less stateful code</strong></li>
+</ul>
+<p>Don’t depend on the state of global objects or the execution of certain methods. Instead, depend only on the return values of methods. Why?</p>
+<ul>
+<li>Code will be easier to reason about.</li>
+<li>Code will be easier to test.</li>
+<li>Mixing async and synchronous code is far simpler.</li>
+<li>Race conditions can typically be avoided altogether.</li>
+<li>Depending on return values makes coordinating async code simple.</li>
+<li>(Bonus) it works really well with dependency injection.</li>
+</ul>
+<p>A recommended goal is to achieve complete or near-complete <a href="https://en.wikipedia.org/wiki/Referential_transparency_%28computer_science%29">Referential Transparency</a> in your code. Doing so will result in an extremely predictable, testable, and maintainable codebase.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+            <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="inner-footer">
+          <p>© .NET Foundation</p>
+          <p>
+            <a href="https://www.github.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-github fa-stack-1x"></span>
+            </span></a>
+            <a href="https://twitter.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-twitter fa-stack-1x"></span>
+            </span></a>
+            <a href="https://www.facebook.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-facebook fa-stack-1x"></span>
+            </span></a>
+      
+          </p>
+          </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>

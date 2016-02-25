@@ -1,0 +1,12 @@
+# Jekyll site
+_site/
+.jekyll-metadata
+_config.yml
+
+#Gemfile
+Gemfile
+Gemfile.lock
+
+# vim swap files
+*.swp
+*.*~

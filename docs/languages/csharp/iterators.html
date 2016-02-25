@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Iterators | CoreCLR site</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Iterators | CoreCLR site">
+    
+    <link rel="shortcut icon" href="../../../images/Logo_DotNet.png" type="image/x-icon">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/style.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-63735192-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+  </head>  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <a href="../../../"><img height="50px" src="../../../images/Logo_DotNet.png" style="float:right;"></a>
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../../../"><span class="dotnet">.NET Core</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content">
+        
+        <div class="sidenav">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content">
+              <a href="https://github.com/dotnet/core-docs/blob/master/docs/languages/csharp/iterators.md/#L1" class="pull-right mobile-hide"><span class="fa fa-github"></span> Improve this Doc</a>
+              <h1 id="iterators">Iterators</h1>
+              
+<p>Almost every program you write will have some need to iterate
+over a collection. You&#39;ll write code that examines every item in
+a collection. </p>
+<p>You&#39;ll also create iterator methods which are methods that produces an
+iterator for the elements of that class. These can be used for:</p>
+<ul>
+<li>Performing an action on each item in a collection.</li>
+<li>Enumerating a custom collection.</li>
+<li>Extending <a href="linq.html">LINQ</a> or other libraries.</li>
+<li>Creating a data pipeline where data flows efficiently through iterator
+methods.</li>
+</ul>
+<p>The C# language provides
+features for both these scenarios. This article provides an overview
+of those features.</p>
+<h1 id="iterating-with-foreach">Iterating with foreach</h1>
+<p>Enumerating a collection is simple: The <code>foreach</code> keyword enumerates
+a collection, executing the embedded statement once for each element
+in the collection:</p>
+<pre><code class="lang-cs">foreach (var item in collection)
+{
+   Console.WriteLine(item.ToString());
+}
+</code></pre>
+<p>That&#39;s all there is to it. To iterate over all the contents of a collection,
+the <code>foreach</code> statement is all you need. The <code>foreach</code> statement isn&#39;t magic,
+though. It relies on two generic interfaces defined in the .NET core library in order
+to generate the code necessary to iterate a collection: <code>IEnumerable&lt;T&gt;</code> and
+<code>IEnumerator&lt;T&gt;</code>. This mechanism is explained in more detail <a href="#deeper-dive-into-foreach-">below</a>.</p>
+<p>Both of these interfaces also have non-generic counterparts: <code>IEnumerable</code> and 
+<code>IEnumerator</code>. The <a href="generics.html">generic</a> versions are preferred for modern code.</p>
+<h1 id="enumeration-sources-with-iterator-methods">Enumeration sources with iterator methods</h1>
+<p>Another great feature of the C# language enables you to build methods that create
+a source for an enumeration. These are referred to as <em>iterator methods</em>. An iterator
+method defines how to generate the objects in a sequence when requested. You
+use the <code>yield return</code> contextual keywords to define an iterator method. </p>
+<p>You could write this method to produce the sequence of integers from 0 through 9:</p>
+<pre><code class="lang-cs">public IEnumerable&lt;int&gt; GetSingleDigitNumbers()
+{
+    yield return 0;
+    yield return 1;
+    yield return 2;
+    yield return 3;
+    yield return 4;
+    yield return 5;
+    yield return 6;
+    yield return 7;
+    yield return 8;
+    yield return 9;
+}
+</code></pre>
+<p>The code above shows distinct <code>yield return</code> statements to highlight the fact that
+you can use multiple discrete <code>yield return</code> statements in an iterator method.
+You can (and often do) use other language constructs to simplify the code of an
+iterator method. The method definition below produces the exact same sequence
+of numbers:</p>
+<pre><code class="lang-cs">public IEnumerable&lt;int&gt; GetSingleDigitNumbers()
+{
+    int index = 0;
+    while (index++ &lt; 10)
+        yield return index;
+}
+</code></pre>
+<p>You don&#39;t have to decide one or the other. You can have as many <code>yield return</code>
+statements as necessary to meet the needs of your method:</p>
+<pre><code class="lang-cs">public IEnumerable&lt;int&gt; GetSingleDigitNumbers()
+{
+    int index = 0;
+    while (index++ &lt; 10)
+        yield return index;
+
+    yield return 50;
+
+    index = 100;
+    while (index++ &lt; 110)
+        yield return index;
+}
+</code></pre>
+<p>That&#39;s the basic syntax. Let&#39;s consider a real world example where you would
+write an iterator method. Imagine you&#39;re on an IoT project and the device
+sensors generate a very large stream of data. To get a feel for the data, you
+might write a method that samples every Nth data element. This small iterator
+method does the trick:</p>
+<pre><code class="lang-cs">public static IEnumerable&lt;T&gt; Sample(this IEnumerable&lt;T&gt; sourceSequence, int interval)
+{
+    int index = 0;
+    foreach (T item in sourceSequence)
+    {
+        if (index++ % interval == 0)
+            yield return item;
+    }
+}
+</code></pre>
+<p>There is one important restriction on iterator methods: you can&#39;t have both a
+<code>return</code> statement and a <code>yield return</code> statement in the same method. The following
+will not compile:</p>
+<pre><code class="lang-cs">public IEnumerable&lt;int&gt; GetSingleDigitNumbers()
+{
+    int index = 0;
+    while (index++ &lt; 10)
+        yield return index;
+
+    yield return 50;
+
+    // generates a compile time error: 
+    var items = new int[] {100, 101, 102, 103, 104, 105, 106, 107, 108, 109 };
+    return items;  
+}
+</code></pre>
+<p>This restriction normally isn&#39;t a problem. You have a choice of either using
+<code>yield return</code> throughout the method, or separating the original method into
+multiple methods, some using <code>return</code>, and some using <code>yield return</code>.</p>
+<p>You can modify the last method slightly to use <code>yield return</code> everywhere:</p>
+<pre><code class="lang-cs">public IEnumerable&lt;int&gt; GetSingleDigitNumbers()
+{
+    int index = 0;
+    while (index++ &lt; 10)
+        yield return index;
+
+    yield return 50;
+
+    var items = new int[] {100, 101, 102, 103, 104, 105, 106, 107, 108, 109 };
+    foreach (var item in items)
+        yield return item;
+}
+</code></pre>
+<p>Sometimes, the right answer is to split an iterator method into two different
+methods. One that uses <code>return</code>, and a second that uses <code>yield return</code>. Consider
+a situation where you might want to return an empty collection, or the first 5
+odd numbers, based on a boolean argument. You could write that as these two
+methods:</p>
+<pre><code class="lang-cs">public IEnumerable&lt;int&gt; GetSingleDigitOddNumbers(bool getCollection)
+{
+    if (getCollection == false)
+        return new int[0];
+    else
+        return IteratorMethod();
+}
+
+private IEnumerable&lt;int&gt; IteratorMethod()
+{
+    int index = 0;
+    while (index++ &lt; 10)
+        if (index % 2 == 1)
+            yield return index;
+}
+</code></pre>
+<p>Look at the methods above. The first uses the standard <code>return</code> statement to return
+either an empy collection, or the iterator created by the second method. The second
+method uses the <code>yield return</code> statement to create the requested sequence.</p>
+<h1 id="deeper-dive-into-foreach-">Deeper Dive into <code>foreach</code></h1>
+<p>The <code>foreach</code> statement expands into a standard idiom that uses the
+<code>IEnumable&lt;T&gt;</code> and <code>IEnumerator&lt;T&gt;</code> interfaces to iterate across all
+elements of a colleciton. It also  minimizes errors developers make
+by not properly managing resources. </p>
+<p>The compiler translates the <code>foreach</code> loop shown in the first
+example into something similar to this construct:</p>
+<pre><code class="lang-cs">IEnumerator&lt;int&gt; enumerator = collection.GetEnumerator();
+while (enumerator.MoveNext())
+{
+    var item = enumerator.Current;
+    Console.WriteLine(item.ToString());
+}
+</code></pre>
+<p>The construct above represents the code generated by the C# compiler as of
+version 5 and above. Prior to version 5, the <code>item</code> variable had a different scope:</p>
+<pre><code class="lang-cs">// C# versions 1 through 4:
+IEnumerator&lt;int&gt; enumerator = collection.GetEnumerator();
+int item = default(int);
+while (enumerator.MoveNext())
+{
+    item = enumerator.Current;
+    Console.WriteLine(item.ToString());
+}
+</code></pre>
+<p>This was changed because the earlier behavior could lead to subtle and hard
+to diagnose bugs involving lambda expressions. See the section on
+<a href="lambda-expressions.html">lambda expressions</a> for more information. </p>
+<p>The exact code generated by the compiler is somewhat more complicated, and
+handles situations where the object returned by <code>GetEnumerator()</code> implements
+the <code>IDisposable</code> interface. The full expansion generates code more like this:</p>
+<pre><code class="lang-cs">{
+    var enumerator = collection.GetEnumerator();
+    try 
+    {
+        while (enumerator.MoveNext())
+        {
+            var item = enumerator.Current;
+            Console.WriteLine(item.ToString());
+        }
+    } finally 
+    {
+        // dispose of enumerator.
+    }
+}
+</code></pre>
+<p>The manner in which the enumerator is disposed of depends on the characteristics of
+the type of <code>enumerator</code>. In the general case, the <code>finally</code> clause expands to:</p>
+<pre><code class="lang-cs">finally 
+{
+   (enumerator as IDisposable)?.Dispose();
+}
+</code></pre>
+<p>However, if the type of <code>enumerator</code> is a sealed type and there is no implicit
+conversion from the type of <code>enumerator</code> to <code>IDisposable</code>, the <code>finally</code> clause
+expands to an empty block:</p>
+<pre><code class="lang-cs">finally 
+{
+}
+</code></pre>
+<p>If there is an implicit conversion from the type of <code>enumerator</code> to <code>IDisposable</code>,
+and <code>enumerator</code> is a non-nullable value type, the <code>finally</code> clause expands to:</p>
+<pre><code class="lang-cs">finally 
+{
+   ((IDisposable)enumerator).Dispose();
+}
+</code></pre>
+<p>Thankfully, you don&#39;t need to remember all these details. The <code>foreach</code> statement
+handles all those nuances for you. The compiler will generate the correct code for
+any of these constructs. </p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+            <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="inner-footer">
+          <p>© .NET Foundation</p>
+          <p>
+            <a href="https://www.github.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-github fa-stack-1x"></span>
+            </span></a>
+            <a href="https://twitter.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-twitter fa-stack-1x"></span>
+            </span></a>
+            <a href="https://www.facebook.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-facebook fa-stack-1x"></span>
+            </span></a>
+      
+          </p>
+          </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>

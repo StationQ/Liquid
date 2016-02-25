@@ -1,0 +1,35 @@
+<!-- WINDOWS GETTING STARTED -->
+    <div class="step step-none windows-trail" id="step-1">
+      <div class="step-number">1</div>
+      <h3>Install .NET Core</h3>
+      <p>The best way to install .NET Core on Windows is to download the <a href="https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-win-x64.latest.exe">official MSI installer</a>. This installer will install the tools and put them on your PATH.</p>
+      <p>If you are using Windows 7 or Windows Server 2008 you will also need to install <a href="https://www.microsoft.com/en-us/download/confirmation.aspx?id=30679">Visual C++ Redistributable for Visual Studio 2012 Update 4</a> too.</p>
+  </div>
+    <div class="step step-none windows-trail" id="step-2">
+      <div class="step-number">2</div>
+      <h3>Initialize some code</h3>
+      <p>Let's initialize a sample Hello World application!</p>
+      <div class="terminal">
+        <div class="terminal-titlebar"></div>
+        <div class="terminal-body">
+            <p>mkdir hwapp</p>
+            <p>cd hwapp</p>
+          <p>dotnet new</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step step-none windows-trail" id="step-3">
+      <div class="step-number">3</div>
+      <h3>Run the app</h3>
+      <p>The first command will restore the packages specified in the <strong>project.json</strong> file, and the second command will run the actual sample:</p>
+      <div class="terminal">
+        <div class="terminal-titlebar"></div>
+        <div class="terminal-body">
+          <p>dotnet restore</p>
+          <p>dotnet run</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- END OF WINDOWS GETTING STARTED -->

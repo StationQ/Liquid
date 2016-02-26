@@ -9,12 +9,12 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content=".NET Compiler Platform (&#8220;Roslyn&#8221;) Overview | CoreCLR site">
     
-    <link rel="shortcut icon" href="../../../images/Logo_DotNet.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ site.github.url }}/../images/Logo_DotNet.png" type="image/x-icon">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../../styles/vendor.css">
-    <link rel="stylesheet" href="../../../styles/coreclr/coreclr.css">
-    <link rel="stylesheet" href="../../../styles/main.css">
-    <link rel="stylesheet" href="../../../styles/style.css">
+    <link rel="stylesheet" href="{{ site.github.url }}/../styles/vendor.css">
+    <link rel="stylesheet" href="{{ site.github.url }}/../styles/coreclr/coreclr.css">
+    <link rel="stylesheet" href="{{ site.github.url }}/../styles/main.css">
+    <link rel="stylesheet" href="{{ site.github.url }}/../styles/style.css">
     <meta property="docfx:nav" content="toc.html">
     <meta property="docfx:toc" content="docs/toc.html">
     <meta property="docfx:navrel" content="../../../toc.html">
@@ -26,7 +26,7 @@
         
         <nav class="navbar navbar-inverse">
              <div class="container">
-               <a href="../../../"><img height="50px" src="../../../images/Logo_DotNet.png" style="float:right;"></a>
+               <a href="{{ site.github.url }}/../"><img height="50px" src="../../../images/Logo_DotNet.png" style="float:right;"></a>
                <div class="navbar-header ">
                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                    <span class="sr-only">Toggle navigation</span>
@@ -34,7 +34,7 @@
                    <span class="icon-bar"></span>
                    <span class="icon-bar"></span>
                  </button>
-                 <a class="navbar-brand" href="../../../"><span class="dotnet">.NET Core</span></a>
+                 <a class="navbar-brand" href="{{ site.github.url }}/../"><span class="dotnet">.NET Core</span></a>
                </div>
                <div id="navbar" class="collapse navbar-collapse">
                </div><!--/.nav-collapse -->
@@ -55,7 +55,7 @@
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
             <div class="sidetoc">
-              <iframe id="sidetoc" src="../../toc.html"></iframe>
+              <iframe id="sidetoc" src="{{ site.github.url }}/toc.html"></iframe>
             </div>
           </div>
         </div>
@@ -106,16 +106,16 @@
 <h2 id="exposing-the-compiler-apis">Exposing the Compiler APIs</h2>
 <h3 id="compiler-pipeline-functional-areas">Compiler Pipeline Functional Areas</h3>
 <p>The .NET Compiler Platform (“Roslyn”) exposes the C# and Visual Basic compiler’s code analysis to you as a consumer by providing an API layer that mirrors a traditional compiler pipeline.</p>
-<p><img src="../../_images/compiler-pipeline.png" alt="../../_images/compiler-pipeline.png"></p>
+<p><img src="{{ site.github.url }}/_images/compiler-pipeline.png" alt="../../_images/compiler-pipeline.png"></p>
 <p>Each phase of this pipeline is now a separate component. First the parse phase, where source is tokenized and parsed into syntax that follows the language grammar. Second the declaration phase, where declarations from source and imported metadata are analyzed to form named symbols. Next the bind phase, where identifiers in the code are matched to symbols. Finally, the emit phase, where all the information built up by the compiler is emitted as an assembly.</p>
-<p><img src="../../_images/compiler-pipeline-api.png" alt="../../_images/compiler-pipeline-api.png"></p>
+<p><img src="{{ site.github.url }}/_images/compiler-pipeline-api.png" alt="../../_images/compiler-pipeline-api.png"></p>
 <p>Corresponding to each of those phases, an object model is surfaced that allows access to the information at that phase. The parsing phase is exposed as a syntax tree, the declaration phase as a hierarchical symbol table, the binding phase as a model that exposes the result of the compiler’s semantic analysis and the emit phase as an API that produces IL byte codes.</p>
-<p><img src="../../_images/compiler-pipeline-lang-svc.png" alt="../../_images/compiler-pipeline-lang-svc.png"></p>
+<p><img src="{{ site.github.url }}/_images/compiler-pipeline-lang-svc.png" alt="../../_images/compiler-pipeline-lang-svc.png"></p>
 <p>Each compiler combines these components together as a single end-to-end whole.</p>
 <p>To ensure that the public Compiler APIs are sufficient for building world-class IDE features, the language services that will be used to power the C# and VB experiences in Visual Studio vNext have been rebuilt using them. For instance, the code outlining and formatting features use the syntax trees, the Object Browser and navigation features use the symbol table, refactorings and Go to Definition use the semantic model, and Edit and Continue uses all of these, including the Emit API. These experiences may be previewed on Visual Studio 2013 through the “Roslyn” End-User Preview. This preview is required in order to build and test applications build on top of the .NET Compiler Platform (“Roslyn”) SDK meant for integration into Visual Studio though the .NET Compiler Platform (“Roslyn”) APIs can be used in your own applications independently of Visual Studio without requiring the End-User Preview.</p>
 <h3 id="api-layers">API Layers</h3>
 <p>The .NET Compiler Platform (“Roslyn”) consists of two main layers of APIs – the Compiler APIs and Workspaces APIs.</p>
-<p><img src="../../_images/alex-api-layers.png" alt="../../_images/alex-api-layers.png"></p>
+<p><img src="{{ site.github.url }}/_images/alex-api-layers.png" alt="../../_images/alex-api-layers.png"></p>
 <h4 id="compiler-apis">Compiler APIs</h4>
 <p>The compiler layer contains the object models that correspond with information exposed at each phase of the compiler pipeline, both syntactic and semantic. The compiler layer also contains an immutable snapshot of a single invocation of a compiler, including assembly references, compiler options, and source code files. There are two distinct APIs that represent the C# language and the Visual Basic language. These two APIs are similar in shape but tailored for high fidelity to each individual language. This layer has no dependencies on Visual Studio components.</p>
 <h4 id="diagnostic-apis">Diagnostic APIs</h4>
@@ -213,7 +213,7 @@
 <p>A project is a part of the overall immutable solution model. It represents all the source code documents, parse and compilation options, and both assembly and project-to-project references. From a project, you can access the corresponding compilation without needing to determine project dependencies or parse any source files.</p>
 <p>A document is also a part of the overall immutable solution model. A document represents a single source file from which you can access the text of the file, the syntax tree, and the semantic model.</p>
 <p>The following diagram is a representation of how the Workspace relates to the host environment, tools, and how edits are made.</p>
-<p><img src="../../_images/workspace-obj-relations.png" alt="../../_images/workspace-obj-relations.png"></p>
+<p><img src="{{ site.github.url }}/_images/workspace-obj-relations.png" alt="../../_images/workspace-obj-relations.png"></p>
 <h2 id="summary">Summary</h2>
 <p>The .NET Compiler Platform (“Roslyn”) exposes a set of Compiler APIs and Workspaces APIs that provides rich information about your source code and that has full fidelity with the C# and Visual Basic languages. The transition to compilers as a platform dramatically lowers the barrier to entry for creating code focused tools and applications. It creates many opportunities for innovation in areas such as meta-programming, code generation and transformation, interactive use of the C# and VB languages, and embedding of C# and VB in domain specific languages.</p>
 
@@ -250,8 +250,8 @@
       </footer>
     </div>
     
-    <script type="text/javascript" src="../../../styles/vendor.js"></script>
-    <script type="text/javascript" src="../../../styles/main.js"></script>
+    <script type="text/javascript" src="{{ site.github.url }}/../styles/vendor.js"></script>
+    <script type="text/javascript" src="{{ site.github.url }}/../styles/main.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>

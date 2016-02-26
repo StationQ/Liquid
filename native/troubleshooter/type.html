@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MissingMetadataException troubleshooter</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="rdgenerate.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>MissingMetadataException troubleshooter</h1>
+
+        <p>
+            To make your app faster and smaller, the .NET Native compiler performs whole program optimizations that employ static analysis to model the
+            program behavior. The optimizations are similar to those traditionally used when compiling languages like C++. One of the
+            optimizations done by the .NET Native compiler is the removal of types, methods, constructors, properties, events, and fields that are not used.
+        </p>
+
+        <p>
+            Since reflection is dynamic in nature, not all reflection use can be determined statically at the time of compilation. Because .NET Native
+            does not presently have a just-in-time compiler to compile the pieces that are missing, everything that can be accessed at runtime needs
+            to be known at the time of compilation. Your app will encounter a
+            <a href="https://msdn.microsoft.com/en-us/library/dn600633(v=vs.110).aspx">MissingMetadataException</a> or
+            <a href="https://msdn.microsoft.com/en-us/library/dn798709(v=vs.110).aspx">MissingRuntimeArtifactException</a> if it attempts to use
+            something that was removed.
+        </p>
+
+        <p>
+            If the use of reflection is not simple enough for the optimizer to see through, the .NET
+            Native compiler needs your assistance in describing the use of reflection by means of a Runtime Directive.
+        </p>
+
+        <a href="#" onclick="javascript:toggle('directivesDescription', this)" class="expandable">What are runtime directives?</a>
+
+        <div id="directivesDescription" class="collapsed">
+            <img src="default-directives.png" class="screenshot-right" width="278" height="218" />
+
+            <p>
+                Runtime Directives provide a way for you to describe what types and members your app needs to have available for reflection purposes. The
+                directives are kept in an XML file with an RD.XML extension that is part of your application package. A default RD.XML file is added to
+                all new universal app projects - look for it in the Properties node (My Project node for Visual Basic) of the Solution Explorer.
+                You can add new runtime directives to it when needed.
+            </p>
+
+            <p>
+                If you're a library author that needs to describe the use of reflection within the library, you can embed a Runtime Directives files
+                in your library. Simply add a file with an RD.XML extension to your library project, right-click the file in the Solution Explorer
+                window and select Properties. Set the <i>Build Action</i> property to <i>Embedded Resource</i> and you're good to go.
+            </p>
+
+            <p>To learn more about the RD.XML syntax, see <a href="https://msdn.microsoft.com/en-us/library/dn600639(v=vs.110).aspx">RD.XML Reference</a>.</p>
+
+            <div class="clear"></div>
+
+            <h2>Runtime Directive builder tool</h2>
+            <p>
+                The builder below will help you create a directive that will solve the MissingMetadataException you're facing.
+                Use the information in the MissingMetadataException message along with your knowledge of the code that hit the exception
+                to pick the right answers. If the MissingMetadataException message doesn't have helpful information, make sure to rebuild
+                in Debug mode <i>with</i> .NET Native optimization enabled.
+            </p>
+        </div>
+    </div> <!-- /container -->
+
+    <div class="clear"></div>
+
+    <div class="rd-builder">
+
+        <div class="wizard" id="scrollingPart">
+            <div class="wizard-panel">
+                <div class="wizard-panel-heading">I reflect on</div>
+                <div class="wizard-panel-content">
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="type">
+                            <input type="radio" ms-rd-bind="bind" name="kind" value="type" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="type">
+                            <p><strong>A single type</strong></p>
+                            <p>There's no pattern. A single type with the following name:</p>
+                            <input type="text"
+                                   ms-rd-bind="bind"
+                                   ms-rd-inputgroup="type"
+                                   id="typeName"
+                                   placeholder="example: System.Object, or GenericType&lt;System.String&gt;" />
+                        </div>
+                    </div> <!-- /input-group -->
+
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="subtype">
+                            <input type="radio" ms-rd-bind="bind" name="kind" value="subtype" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="subtype">
+                            <p><strong>All subtypes of a type</strong></p>
+                            <p>All types that implement following interface or derive from the following type:</p>
+                            <input type="text"
+                                   ms-rd-bind="bind"
+                                   ms-rd-inputgroup="subtype"
+                                   id="subtypeName"
+                                   placeholder="example: System.ComponentModel.INotifyPropertyChanged" />
+                        </div>
+                    </div> <!-- /input-group -->
+
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="attributeImplies">
+                            <input type="radio" ms-rd-bind="bind" name="kind" value="attributeImplies" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="attributeImplies">
+                            <p><strong>All types with a custom attribute applied</strong></p>
+                            <p>All types that have the following attribute applied:</p>
+                            <input type="text"
+                                   ms-rd-bind="bind"
+                                   ms-rd-inputgroup="attributeImplies"
+                                   id="attributeName"
+                                   placeholder="example: System.Attribute" />
+                        </div>
+                    </div> <!-- /input-group -->
+
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="namespace">
+                            <input type="radio" ms-rd-bind="bind" name="kind" value="namespace" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="namespace">
+                            <p><strong>All types in a namespace</strong></p>
+                            <p>All types within the following namespace:</p>
+                            <input type="text"
+                                   ms-rd-bind="bind"
+                                   ms-rd-inputgroup="namespace"
+                                   id="namespaceName"
+                                   placeholder="example: System.Collections.Generic" />
+                        </div>
+                    </div> <!-- /input-group -->
+
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="assembly">
+                            <input type="radio" ms-rd-bind="bind" name="kind" value="assembly" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="assembly">
+                            <p><strong>All types in an assembly</strong></p>
+                            <p>All types in the following assembly:</p>
+                            <input type="text"
+                                   ms-rd-bind="bind"
+                                   ms-rd-inputgroup="assembly"
+                                   id="assemblyName"
+                                   placeholder="example: System.Runtime" />
+                        </div>
+                    </div> <!-- /input-group -->
+                </div> <!-- /wizard-panel-content -->
+            </div> <!-- /wizard-panel -->
+
+
+            <div class="wizard-panel">
+                <div class="wizard-panel-heading">I use reflection to</div>
+
+                <div class="wizard-panel-content">
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="Activate">
+                            <input type="radio" ms-rd-bind="bind" name="degreeName" value="Activate" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="Activate">
+                            <p><strong>Activate</strong></p>
+                            <p>Use Activator.CreateInstance or ConstructorInfo.Invoke to construct new instances of the type.</p>
+                        </div>
+                    </div> <!-- /input-group -->
+
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="Dynamic">
+                            <input type="radio" ms-rd-bind="bind" name="degreeName" value="Dynamic" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="Dynamic">
+                            <p><strong>Access members or activate</strong></p>
+                            <p>Access methods, constructors, properties, fields and events on the type using reflection. This
+                            is a superset of Activation.</p>
+                        </div>
+                    </div> <!-- /input-group -->
+
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="Serialize">
+                            <input type="radio" ms-rd-bind="bind" name="degreeName" value="Serialize" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="Serialize">
+                            <p><strong>Serialize object graph</strong></p>
+                            <p>Access properties, fields, and constructors on the type and the types of the fields and properties
+                            recursively. This is a superset of Activation.</p>
+                        </div>
+                    </div> <!-- /input-group -->
+                </div> <!-- /wizard-panel-content -->
+            </div> <!-- /wizard-panel -->
+
+            <div class="wizard-panel">
+                <div class="wizard-panel-heading">I reflect on</div>
+
+                <div class="wizard-panel-content">
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="Required Public">
+                            <input type="radio" ms-rd-bind="bind" name="degreeValue" value="Required Public" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="Required Public">
+                            <p><strong>Public types and members only</strong></p>
+                            <p>Types and members that are not public won't be explictly included by this rule. They might be included by other rules.</p>
+                        </div>
+                    </div> <!-- /input-group -->
+
+                    <div class="input-group">
+                        <div class="input-group-addon" ms-rd-inputgroup="Required All">
+                            <input type="radio" ms-rd-bind="bind" name="degreeValue" value="Required All" />
+                        </div>
+                        <div class="input-group-content" ms-rd-inputgroup="Required All">
+                            <p><strong>Everything</strong></p>
+                            <p>Public, private and internal members and types will be included.</p>
+                        </div>
+                    </div> <!-- /input-group -->
+                </div> <!-- /wizard-panel-content -->
+
+            </div> <!-- /wizard-panel -->
+
+        </div> <!-- /wizard -->
+
+        <div class="preview" id="fixedPart">
+            <div class="preview-panel">
+                <div class="preview-panel-heading">Preview</div>
+                <div class="preview-panel-content">
+                    <p>
+                        This preview shows you the runtime directive corresponding to the choices
+                        you made in the left column. If you're adding a directive to an existing RD.XML file,
+                        append the directives under the <code>&lt;Application&gt;</code> element to the <code>&lt;Application&gt;</code>
+                        element of the existing RD.XML.
+                    </p>
+
+                    <p>If you are authoring an RD.XML for a library, replace <code>&lt;Application&gt;</code>  with <code>&lt;Library&gt;</code> .</p>
+
+                    <div class="preview-xml" id="preview"></div>
+                 </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div> <!-- rd-builder -->
+
+    <p class="copyright">&copy;2015 Microsoft</p>
+</body>
+</html>

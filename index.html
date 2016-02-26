@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <!-- include head here -->
+  <head>
+ <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Welcome to .NET Core!</title>
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.6/animate.min.css">
+
+<!-- Custom styles for this template -->
+<link rel="shortcut icon" href="/images/Logo_DotNet.png" type="image/x-icon">
+
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+   ga('create', 'UA-63735192-1', 'auto');
+   ga('send', 'pageview');
+
+</script>
+</head>
+
+<body>
+  <!-- include navigation here -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+     <div class="container">
+       <a href="http://www.dotnetfoundation.org/"><img height="50px" src="../../images/Logo_DotNet.png" style="float:right;"/></a>
+       <div class="navbar-header ">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="/"><span class="dotnet">.NET Core</span></a>
+       </div>
+       <div id="navbar" class="collapse navbar-collapse">
+         <ul class="nav navbar-nav">
+           <li><a href="/getting-started/">Getting started</a></li>
+           <li><a href="/about/">About</a></li>
+           <li><a href="/docs/">Documentation</a></li>
+           <li><a href="/api/index.html">API reference</a></li>
+           <li><a href="/support/">Support</a></li>
+           <li><a href="/porting/">Porting</a></li>
+         </ul>
+       </div><!--/.nav-collapse -->
+     </div>
+   </nav>
+
+  <!-- include hero here if the page is index -->
+  
+    <div class="container hero">
+
+  <div class="starter-template">
+    <h1 class="dotnet">.NET Core</h1>
+    <p class="lead">A general purpose managed framework</p>
+    <!-- Standard button -->
+    <a href="/getting-started/" class="btn-hero-core">Getting started</a>
+    <a href="/about/" class="btn-hero-core">About .NET Core</a>
+
+  </div>
+
+</div><!-- /.container -->
+
+  
+
+<div class="container content">
+      <!-- CONTENT GOES HERE -->
+      <!-- INCLUDE THE VALUE PROPS -->
+<div id="vp-container">
+  <div id="initial-vps">
+    <div class="row value-props">
+      <div class="col-lg-4 text-center animated fadeInLeft">
+        <span class="fa fa-cubes fa-3x"></span>
+        <h2 class="value-prop-heading">Modular</h2>
+        <p>.NET Core is a set of runtime, library and compiler components. Microsoft uses these components in various configurations for device and cloud workloads. You can do the same for your app or service.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 text-center  animated fadeIn">
+        <span class="fa fa-code fa-3x"></span>
+        <h2 class="value-prop-heading">Managed</h2>
+        <p>Managed runtimes make code easy to write and guarantee safe execution. .NET Core manages memory with a garbage collector, compiles your code with a JIT compiler or ahead of time with .NET Native. </p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 text-center animated fadeInRight">
+        <span class="fa fa-linux fa-3x"></span>
+        <h2 class="value-prop-heading">Cross-platform</h2>
+        <p>You can create .NET Core apps that run on multiple OSes and CPUs. .NET Core runs on Windows. Ports are in progress for Linux, OS X and FreeBSD, as is integration with the LLVM compiler.</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+  </div>
+  <div id="rest-vps">
+    <div class="row value-props">
+      <div class="col-lg-4 text-center">
+        <span class="fa fa-magic fa-3x"></span>
+        <h2 class="value-prop-heading">Modern</h2>
+        <p>.NET Core brings with it a set of languages, led  by C#, with VB and F# with support for modern language features, like generics, Language Integrated Query (LINQ), async support and more. It is backed by a managed compiler called "Roslyn" that is exposed to the runtime, usable as a service.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 text-center">
+        <span class="fa fa-wrench fa-3x"></span>
+        <h2 class="value-prop-heading">Interoperable</h2>
+        <p>The managed runtime of .NET Core allows for a streamlined and easy interoperability with native code through several ways. Each of them allows for a rich set of scenarios not to mention great performance.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 text-center">
+        <span class="fa fa-cogs fa-3x"></span>
+        <h2 class="value-prop-heading">Extensible</h2>
+        <p>Runtime modularity allows for an extensibility model through a good set of abstractions for adding new components to the actual runtime and its class library, but also through its package manager NuGet, which allows for a powerful componentization strategies.</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+    <div class="row value-props">
+      <div class="col-lg-4 text-center">
+        <span class="fa fa-server fa-3x"></span>
+        <h2 class="value-prop-heading">Adaptable</h2>
+        <p>.NET Core is versatile in multiple scenarios, from client applications, across web, server workloads to mobile apps. With its "pay as you go" model, .NET Core can be adapted easily to perform great and provide a rich experience developing for each of these.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 text-center">
+        <span class="fa fa-plug fa-3x"></span>
+        <h2 class="value-prop-heading">Portable</h2>
+        <p>.NET Core is portable across various platforms, both in terms of operating systems and processor architectures. Code written for it is also portable across application stacks, such as Mono, making it feasible to move applications across app stacks as well.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 text-center">
+        <span class="fa fa-users fa-3x"></span>
+        <h2 class="value-prop-heading">Open</h2>
+        <p>.NET Core is backed by an open ECMA standard that outlines all of its capabilities which can be used to make a new reference implementation. A lot of projects did exactly this, and there are various implementation out there, Mono and Unity being the most popular, non-Microsoft ones.</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <button class="btn btn-default show-value-props"><span class="fa fa-chevron-down fa-2x"></span></button>
+  </div>
+</div>
+
+
+
+<div class="row">
+	<div class="col-md-12 intro-image">
+		<h2>A simple way to start</h2>
+		<p>Refer to our <a href="/getting-started/">getting started page</a> for a more detailed look on how to get going on various platforms. You can then read <a href="/about/">about the project</a>, try out <a href="/docs/">the documentation</a> or get <a href="/support/">in touch</a>.</p>
+	</div>
+</div>
+
+
+
+</div>
+<!-- FOOTER -->
+<!-- include footer here -->
+<footer>
+  <div class="inner-footer">
+    <p>© .NET Foundation</p>
+    <p>
+      <a href="https://www.github.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+        <span class="fa fa-square-o fa-stack-2x"></span>
+        <span class="fa fa-github fa-stack-1x"></span>
+      </span></a>
+      <a href="https://twitter.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+        <span class="fa fa-square-o fa-stack-2x"></span>
+        <span class="fa fa-twitter fa-stack-1x"></span>
+      </span></a>
+      <a href="https://www.facebook.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+        <span class="fa fa-square-o fa-stack-2x"></span>
+        <span class="fa fa-facebook fa-stack-1x"></span>
+      </span></a>
+
+    </p>
+    </div>
+</footer>
+
+<script src="/js/commoncode.js"></script>
+  </body>
+</html>

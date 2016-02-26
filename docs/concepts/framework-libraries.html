@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Framework Libraries | CoreCLR site</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Framework Libraries | CoreCLR site">
+    
+    <link rel="shortcut icon" href="../../images/Logo_DotNet.png" type="image/x-icon">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/style.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="">
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-63735192-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+  </head>  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <a href="../../"><img height="50px" src="../../images/Logo_DotNet.png" style="float:right;"></a>
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../../"><span class="dotnet">.NET Core</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content">
+              <a href="https://github.com/dotnet/core-docs/blob/master/docs/concepts/framework-libraries.md/#L1" class="pull-right mobile-hide"><span class="fa fa-github"></span> Improve this Doc</a>
+              <h1 id="framework-libraries">Framework Libraries</h1>
+              
+<p>.NET has an expansive standard set of class libraries, referred to as either the base class libraries (core set) or framework class libraries (complete set). These libraries provide implementations for many general and app-specific types, algorithms and utility functionality. Both commercial and community libraries build on top of the framework class libraries, providing easy to use off-the-shelf libraries for a wide set of computing tasks.</p>
+<p>A subset of these libraries are provided with each .NET implementation. Base Class Library (BCL) APIs are expected with any .NET implementation, both because developers will want them and because popular libraries will need them to run. App-specific libraries above the BCL, such as ASP.NET, will not be available on all .NET implementations.</p>
+<h2 id="base-class-libraries">Base Class Libraries</h2>
+<p>The BCL provides the most foundational types and utility functionality and are the base of all other .NET class libraries. They aim to provide very general implementations without any bias to any workload. Performance is always an important consideration, since apps might prefer a particular policy, such as low-latency to high-throughput or low-memory to low-CPU usage. These libraries are intended to be high-performance generally, and take a middle-ground approach according to these various performance concerns. For most apps, this approach has been quite successful.</p>
+<h2 id="primitive-types">Primitive Types</h2>
+<p>.NET includes a set of primitive types, which are used (to varying degrees) in all programs. These types contain data, such as numbers, strings, bytes and arbitrary objects. The C# language includes keywords for these types. A sample set of these types is listed below, with the matching C# keywords.</p>
+<ul>
+<li><a href="https://msdn.microsoft.com/library/system.object.aspx">System.Object</a> (<a href="https://msdn.microsoft.com/library/9kkx3h3c.aspx">object</a>) - The ultimate base class in the CLR type system. It is the root of the type hierarchy.</li>
+<li><a href="https://msdn.microsoft.com/library/system.int16.aspx">System.Int16</a> (<a href="https://msdn.microsoft.com/library/ybs77ex4.aspx">short</a>) - A 16-bit signed integer type. The unsigned <a href="https://msdn.microsoft.com/en-us/library/system.uint16.aspx">UInt16</a> also exists.</li>
+<li><a href="https://msdn.microsoft.com/library/system.int32.aspx">System.Int32</a> (<a href="https://msdn.microsoft.com/library/5kzh1b5w.aspx">int</a>) - A 32-bit signed integer type. The unsigned <a href="https://msdn.microsoft.com/library/x0sksh43.aspx">UInt32</a> also exists.</li>
+<li><a href="https://msdn.microsoft.com/library/system.single.aspx">System.Single</a> (<a href="https://msdn.microsoft.com/library/b1e65aza.aspx">float</a>) - A 32-bit floating-point type.</li>
+<li><a href="https://msdn.microsoft.com/library/system.decimal.aspx">System.Decimal</a> (<a href="https://msdn.microsoft.com/library/364x0z75.aspx">decimal</a>) - A 128-bit decimal type.</li>
+<li><a href="https://msdn.microsoft.com/en-us/library/system.byte.aspx">System.Byte</a> (<a href="https://msdn.microsoft.com/library/5bdb6693.aspx">byte</a>) - An unsigned 8-bit integeger that represents a byte of memory.</li>
+<li><a href="https://msdn.microsoft.com/library/system.boolean.aspx">System.Boolean</a> (<a href="https://msdn.microsoft.comlibrary/c8f5xwh7.aspx">bool</a>) - A boolean type that represents ‘true’ or ‘false’.</li>
+<li><a href="https://msdn.microsoft.com/library/system.char.aspx">System.Char</a> (<a href="https://msdn.microsoft.com/library/x9h8tsay.aspx">char</a>) - A 16-bit numeric type that represents a Unicode character.</li>
+<li><a href="https://msdn.microsoft.com/library/system.string.aspx">System.String</a> (<a href="https://msdn.microsoft.com/library/362314fe.aspx">string</a>) - Represents a series of characters. Different than a <code>char[]</code>, but enables indexing into each individual <code>char</code> in the <code>string</code>.</li>
+</ul>
+<h2 id="data-structures">Data Structures</h2>
+<p>.NET includes a set of data structures that are the workhorses of almost any .NET apps. These are mostly collections, but also include other types.</p>
+<ul>
+<li><a href="https://msdn.microsoft.com/library/system.array.aspx">Array</a> - Represents an array of strongly types objects that can be accessed by index. Has a fixed size, per its construction.</li>
+<li><a href="https://msdn.microsoft.com/library/6sh2ey19.aspx">List</a> - Represents a strongly typed list of objects that can be accessed by index. Is automatically resized as needed.</li>
+<li><a href="https://msdn.microsoft.com/library/xfhwa508.aspx">Dictionary</a> - Represents a collection of values that are indexed by a key. Values can be accessed via key. Is automatically resized as needed.</li>
+<li><a href="https://msdn.microsoft.com/library/system.uri.aspx">Uri</a> - Provides an object representation of a uniform resource identifier (URI) and easy access to the parts of the URI.</li>
+<li><a href="https://msdn.microsoft.com/library/system.datetime.aspx">DateTime</a> - Represents an instant in time, typically expressed as a date and time of day.</li>
+</ul>
+<h2 id="utility-apis">Utility APIs</h2>
+<p>.NET includes a set of utility APIs that provide functionality for many important tasks.</p>
+<ul>
+<li><a href="https://msdn.microsoft.com/library/system.net.http.httpclient.aspx">HttpClient</a> - An API for sending HTTP requests and receiving HTTP responses from a resource identified by a URI.</li>
+<li><a href="https://msdn.microsoft.com/library/system.xml.linq.xdocument.aspx">XDocument</a> - An API for loading, and querying XML documents with LINQ.</li>
+<li><a href="https://msdn.microsoft.com/library/system.io.streamreader.aspx">StreamReader</a> - An API for reading files (<a href="https://msdn.microsoft.com/library/system.io.stringwriter.aspx">StreamWriter</a>) Can be used to write files.</li>
+</ul>
+<h2 id="app-model-apis">App-Model APIs</h2>
+<p>There are many app-models that can be used with .NET, provided by several companies.</p>
+<ul>
+<li><a href="http://asp.net">ASP.NET</a> - Provides a web framework for building Web sites and services. Supported on Windows, Linux and OS X (depends on ASP.NET version).</li>
+</ul>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+            <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="inner-footer">
+          <p>© .NET Foundation</p>
+          <p>
+            <a href="https://www.github.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-github fa-stack-1x"></span>
+            </span></a>
+            <a href="https://twitter.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-twitter fa-stack-1x"></span>
+            </span></a>
+            <a href="https://www.facebook.com/dotnet" target="_blank"><span class="fa fa-stack fa-lg">
+              <span class="fa fa-square-o fa-stack-2x"></span>
+              <span class="fa fa-facebook fa-stack-1x"></span>
+            </span></a>
+      
+          </p>
+          </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>

@@ -2,53 +2,73 @@
 
     <div class="step step-none linux-trail" id="step-1">
       <div class="step-number">1</div>
-      <h3>Add the new apt-get feed</h3>
-      <p>In order to install .NET Core on Ubuntu, we need to first set up the apt-get feed that hosts the package we need.</p>
-      <p><strong>Note:</strong> as of now, the below instructions work on Ubuntu 14.04 and derivatives. New versions are coming up soon! Also, please be aware that this feed is our development feed. As we stabilize we will change feeds where deb packages are stored.</p>
+      <h3>Install mono and fsharp</h3>
+      <p>Make sure you remove any previous installations of mono or fsharp on your machine to avoid incompatibilities.</p>
+      <p>Now do the install:</p>
       <div class="terminal">
         <div class="terminal-titlebar"></div>
         <div class="terminal-body">
-          <p>sudo sh -c 'echo "deb [arch=amd64] http://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
-</p>
-          <p>sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893</p>
-          <p>sudo apt-get update</p>
+            <pre style="background-color:black;color:white;border-style:none;">
+$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+$ echo "deb http://download.mono-project.com/repo/debian wheezy main" | 
+            sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+$ sudo apt-get update
+$ sudo apt-get install mono-complete fsharp
+            </pre>
         </div>
       </div>
     </div>
     <div class="step step-none linux-trail" id="step-2">
       <div class="step-number">2</div>
-      <h3>Install .NET Core</h3>
-      <p>Installing .NET Core is a simple thing on Ubuntu. The below will install the package and all of its dependencies.</p>
+      <h3>Install LIQ&#x1D448;&#x1D456;&#x23D0;&#x232A;</h3>
+      Download the <a href="http://github.com/StationQ/Liquid">zip file</a> from GitHub (there's a <strong>Download Zip</strong> button near the top right side of the screen).  
+      Then extract the contents into your home directory.
+      This will create ~/Liquid-master. Copy to the final destination:
+      <p></p>
       <div class="terminal">
         <div class="terminal-titlebar"></div>
         <div class="terminal-body">
-          <p>sudo apt-get install dotnet=1.0.0.001331-1</p>
+            <p>$ cd ~/Liquid-master</p>
+            <p>$ sudo mkdir /Liquid</p>
+            <p>$ sudo chown $USER /Liquid</p>
+            <p>$ cp * /Liquid --recursive</p>        
         </div>
       </div>
     </div>
     <div class="step step-none linux-trail" id="step-3">
       <div class="step-number">3</div>
-      <h3>Initialize some code</h3>
-      <p>Let's initialize a sample Hello World application!</p>
+      <h3>Run the app</h3>
+      Go into the <strong>/Liquid/linux directory</strong>, run the app and accept the license:
+      <p></p>
       <div class="terminal">
         <div class="terminal-titlebar"></div>
         <div class="terminal-body">
-            <p>mkdir hwapp</p>
-            <p>cd hwapp</p>
-            <p>dotnet new</p>
+          $ cd /Liquid/linux<br>
+          $ mono Liquid.exe <br>
+            <pre style="background-color:black;color:white;border-style:none;">
+0:0000.0/===================================================================================================
+0:0000.0/=    The Language-Integrated Quantum Operations (LIQUi|>) Simulator                               =
+0:0000.0/=    is made available under license by Microsoft Corporation                                     =
+0:0000.0/=    License terms may be viewed at https://github.com/msr-quarc/Liquid/blob/master/LICENSE.md    =
+0:0000.0/=    Please type Y, followed by return, to indicate your acceptance of these terms                =
+0:0000.0/===================================================================================================
+Y
+            </pre>
         </div>
       </div>
     </div>
 
     <div class="step step-none linux-trail" id="step-4">
       <div class="step-number">4</div>
-      <h3>Run the app</h3>
-      <p>First, we restore the packages using the <strong>dotnet restore</strong> command and then run the application!</p>
+      <h3>Try a sample</h3>
+      Now try running the Quantum "Hello World" ... Teleport:<br>
+      (note that there are two underscores in front of Teleport and the program argument has quotation marks because parenthesis are special characters on Linux)
+      <p></p>
       <div class="terminal">
         <div class="terminal-titlebar"></div>
         <div class="terminal-body">
-          <p>dotnet restore</p>
-          <p>dotnet run</p>
+          $ cd /Liquid/linux<br>
+          $ mono Liquid.exe "__Teleport()"<br>
         </div>
       </div>
     </div>

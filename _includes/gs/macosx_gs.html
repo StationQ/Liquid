@@ -1,36 +1,58 @@
 <!-- MAC OSX GETTING STARTED -->
     <div class="step step-none macosx-trail" id="step-1">      
         <div class="step-number">1</div>
-          <h3>Use the official PKG</h3>
-          <p>The best way to install .NET Core on OS X is to use the <a href="https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-osx-x64.latest.pkg">official PKG package</a>. This installer will install the tools and put them on your PATH.</p>
+           <h3>Install mono and fsharp</h3>
+           <p>Install mono and <a href="http://fsharp.org/use/mac/">F#</a> for OSX <a href="http://www.mono-project.com/download/">from here</a></p>
     </div>
     <div class="step step-none macosx-trail" id="step-2">
       <div class="step-number">2</div>
-      <h3>Initialize some code</h3>
-      <p>Let's initialize a sample Hello World application!</p>
-      <div class="terminal">
-        <div class="terminal-titlebar"></div>
-        <div class="terminal-body">
-            <p>mkdir hwapp</p>
-            <p>cd hwapp</p>
-          <p>dotnet new</p>
-        </div>
-      </div>
+      <h3>Install LIQ&#x1D448;&#x1D456;&#x23D0;&#x232A;</h3>
+      Download the <a href="http://github.com/StationQ/Liquid">zip file</a> from GitHub (there's a <strong>Download Zip</strong> button near the top right side of the screen).  <br><br>
+        <ol style="text-align:left;">
+        <li>You'll find <code>Liquid-master</code> in your Downloads, open the folder.</li>
+        <li>Type <code>Command-A</code> <code>Command-C</code> to select all the files and copy them.</li>
+        <li>Type <code>Shift-Command-G</code> and then a slash (<code>/</code>) to go to the root.</li>
+        <li>Type <code>Shift-Command-N</code> to create a new folder (you will have to enter your admin password). Then create the <code>Liquid</code> folder.</li>
+        <li>Double click on the <code>Liquid</code> folder to open it and then type <code>Command-V</code> to paste the contents of the downloaded <code>Liquid-master</code> tree into <code>\Liquid</code>.</li>
+        </ol>
 
     </div>
-
     <div class="step step-none macosx-trail" id="step-3">
       <div class="step-number">3</div>
       <h3>Run the app</h3>
-      <p>The first command will restore the packages specified in the <strong>project.json</strong> file, and the second command will run the actuall sample:</p>
+      Go into the <strong>/Liquid/linux directory</strong>, run the app and accept the license:
+      <p></p>
       <div class="terminal">
         <div class="terminal-titlebar"></div>
         <div class="terminal-body">
-          <p>dotnet restore</p>
-          <p>dotnet run</p>
+          $ cd /Liquid/linux<br>
+          $ mono Liquid.exe <br>
+            <pre style="background-color:black;color:white;border-style:none;">
+0:0000.0/===================================================================================================
+0:0000.0/=    The Language-Integrated Quantum Operations (LIQUi|>) Simulator                               =
+0:0000.0/=    is made available under license by Microsoft Corporation                                     =
+0:0000.0/=    License terms may be viewed at https://github.com/msr-quarc/Liquid/blob/master/LICENSE.md    =
+0:0000.0/=    Please type Y, followed by return, to indicate your acceptance of these terms                =
+0:0000.0/===================================================================================================
+Y
+            </pre>
         </div>
       </div>
+    </div>
 
+    <div class="step step-none macosx-trail" id="step-4">
+      <div class="step-number">4</div>
+      <h3>Try a sample</h3>
+      Now try running the Quantum "Hello World" ... Teleport:<br>
+      (note that there are two underscores in front of Teleport and the program argument has quotation marks because parenthesis are special characters on OSX)
+      <p></p>
+      <div class="terminal">
+        <div class="terminal-titlebar"></div>
+        <div class="terminal-body">
+          $ cd /Liquid/linux<br>
+          $ mono Liquid.exe "__Teleport()"<br>
+        </div>
+      </div>
     </div>
 
     <!-- END OF MACOSX GETTING STARTED -->

@@ -1,0 +1,51 @@
+basis file sto-6g.gbs
+# sys.path.insert(0,'./mointegrals')
+# import mointegrals
+plugin_load("mointegrals/mointegrals.so")
+
+molecule h2o {
+  O
+  H 1 R
+  H 1 R 2 A
+}
+
+Rvals=[0.9573]
+Avals=[104.5]
+
+table=Table(rows=["R","A"], cols=["E(SCF)"])
+
+set {
+  basis sto-6g
+  reference rhf
+  guess sad
+  print 5
+}
+
+set mointegrals {
+    filnam h2o_sto6g_14.dat
+    erase True
+    test 0
+    info1 0.0
+    info2 0.0
+}
+
+test = 0
+erase = True
+
+for R in Rvals:
+    h2o.R = R
+    for A in Avals:
+        h2o.A = A
+        psi4.set_local_option("MOINTEGRALS","ERASE",erase)
+        psi4.set_local_option("MOINTEGRALS","TEST",test)
+        psi4.set_local_option("MOINTEGRALS","INFO1",R)
+        psi4.set_local_option("MOINTEGRALS","INFO2",A)
+	# energy('mointegrals')
+	energy('fci')
+	scf()
+	plugin("mointegrals.so")
+        escf = get_variable('SCF TOTAL ENERGY')
+    	print "=== Test: %3d (%.2f,%.2f) Ehf = %18.12f" % (test,R,A,escf)
+	test = test + 1
+	erase = False
+

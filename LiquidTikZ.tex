@@ -1,0 +1,485 @@
+\documentclass[aps,pra,twocolumn,showpacs,superscriptaddress,superscriptaddress,amsthm,amsmath,amssymb]{revtex4-1}
+\usepackage{graphicx}% Include figure files
+\usepackage{tikz}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usetikzlibrary{
+arrows,shapes.misc,shapes.arrows,matrix,
+positioning,scopes,decorations.pathmorphing,shadows,
+shapes.geometric,decorations.pathreplacing,shapes.gates.logic.US,calc}
+
+\tikzset{
+matStyle/.style={column sep=.4mm,row sep=.4mm,font=\itshape\huge,execute at empty cell=\node{\phantom{.}};},
+measStyle/.style={and gate US,text centered,minimum size=8mm,thick,draw=black,
+    top color=white,bottom color=green!10!white},
+meterStyle/.style={rectangle,text centered,minimum size=8mm,thick,draw=black,
+    top color=white,bottom color=green!10!white},
+lblStyle/.style={rectangle,minimum size=8mm,thick,draw=white,
+	top color=white,bottom color=white},
+rawStyle/.style={},
+prepStyle/.style={rectangle,minimum size=8mm,thick,draw=white,text=red!60!black,
+	top color=white,bottom color=white},
+ctrlStyle/.style={circle,text centered,inner sep=-1pt,minimum size=1mm,thick,draw=black,
+	top color=black,bottom color=black},
+ctrloStyle/.style={circle,text centered,inner sep=-1pt,minimum size=1mm,thick,draw=black,
+	top color=white,bottom color=white},
+targStyle/.style={circle,text centered,inner sep=0pt,minimum size=3mm,thick,draw=black,
+	top color=white,bottom color=white,append after command={
+        [shorten >=\pgflinewidth, shorten <=\pgflinewidth, thick,]
+        (\tikzlastnode.north) edge[thick] (\tikzlastnode.south)
+        (\tikzlastnode.east) edge[thick] (\tikzlastnode.west)
+        }},
+qswapStyle/.style={circle,text centered,inner sep=0pt,minimum size=3mm,thin,draw=white,opacity=0,
+	top color=white,bottom color=white,append after command={
+        [shorten >=\pgflinewidth, shorten <=\pgflinewidth, thick,color=black]
+        (\tikzlastnode.north east) edge[thick] (\tikzlastnode.south west)
+        (\tikzlastnode.north west) edge[thick] (\tikzlastnode.south east)
+        }},
+gateStyle/.style={rectangle,minimum size=8mm,thick,draw=black,
+	top color=white,bottom color=blue!10!white},
+mgStyle/.style={rectangle,minimum size=8mm,transparent},
+mgBoxStyle/.style={rectangle,minimum size=8mm,thick,draw=black,
+	top color=white,bottom color=blue!10!white},
+qwStyle/.style={thick,draw=black,font=\ttfamily},
+qwxStyle/.style={thick,draw=black,font=\ttfamily},
+>=latex,thick,
+/pgf/every decoration/.style={/tikz/sharp corners},
+pointStyle/.style={coordinate},
+>=stealth',thick,draw=black,tip/.style={->,shorten >=0.007pt},
+every join/.style={rounded corners},
+hv path/.style={to path={-| (\tikztotarget)}},
+vh path/.style={to path={|- (\tikztotarget)}},
+text height=1.5ex,text depth=.25ex
+}
+
+% Give three layers to play with
+\pgfdeclarelayer{background}		% Wires
+\pgfdeclarelayer{foreground}		% Not currently used
+\pgfsetlayers{background,main,foreground}
+
+% Built-in elements
+\newcommand{\gate}[2][] {\node (#1) [gateStyle] {\phantom{$#2$}} node [yshift=-5pt] {$#2$};}
+\newcommand{\lbl}[2][]{\node (#1) [lblStyle] {$#2$};}
+\newcommand{\raw}[2][]{\node (#1) [rawStyle] {$#2$};}
+\newcommand{\prep}[2][]{\node (#1) [prepStyle] {$#2$};}
+\newcommand{\mg}[2][]{\node (#1) [mgStyle] {\phantom{$#2$}};}
+\newcommand{\point}[1][]{ \node (#1) [pointStyle] {};}
+\newcommand{\targ}[1][]{ \node (#1) [targStyle] {};}
+\newcommand{\qswap}[1][]{ \node (#1) [qswapStyle] {};}
+\newcommand{\ctrl}[1][]{ \node (#1) [ctrlStyle] {};}
+\newcommand{\ctrlo}[1][]{ \node (#1) [ctrloStyle] {};}
+\newcommand{\meas}[2][]{\node (#1) [measStyle] {$#2$};}
+
+\newcommand{\meter}[1][] {
+	\node (#1) [meterStyle] {\phantom{$X$}};
+	\draw[thick] ++(.25,-.2) arc (0:180:.25 and .1);
+	\draw[thick] (0,-.14) -- +(.1,.2)
+	;}
+
+\newcommand{\multigate}[4][]{
+    \draw[gateStyle,name=#1] (#2.north west) rectangle (#3.south east);
+    \draw[draw=black,font=\itshape\LARGE] ($0.5*(#2)+0.5*(#3)$) node {$#4$};
+}
+
+% Wires
+\newcommand{\qw}[2]{\draw[qwStyle] (#1) -- (#2);}
+\newcommand{\cw}[2]{\draw[qwStyle, double] (#1) -- (#2);}
+
+\newcommand{\qwx}[2]{\draw[qwxStyle] (#1) -- (#2);}
+\newcommand{\cwx}[2]{\draw[qwxStyle, double] (#1) -| (#2);}
+\newcommand{\dwx}[2]{\draw[qwxStyle, dotted] (#1) -- (#2);}
+\newcommand{\fwx}[2]{\draw[qwxStyle] (#1) -- (#2) node[midway,left] {$\mathcal{F}$};}
+
+ \newcommand{\qwxB}[2]{\draw[qwxStyle] (#1)  to [bend left=4]  (#2);}
+ \newcommand{\dwxB}[2]{\draw[qwxStyle,dotted] (#1)  to [bend left=4]  (#2);}
+ \newcommand{\cwxB}[2]{\draw[qwxStyle,double] (#1)  to [bend left=4]  (#2);}
+
+\iffalse % Dithering example
+    \newcommand{\cwxB}[2]{
+        \coordinate (rnd) at (canvas cs:x=4pt*rand);
+        \draw[qwxStyle, double] ($(#1)+(rnd)$) -| ($(#2)+(rnd)$);
+    }
+\fi
+
+\newcommand{\bra}[1]{{\left\langle{#1}\right\vert}}
+\newcommand{\ket}[1]{{\left\vert{#1}\right\rangle}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\iffalse	% Sample Drawings
+
+\begin{document}
+
+\title{LiquidTikZ sample}
+\author{Dave Wecker}
+
+\begin{figure*}
+\begin{tikzpicture}[scale=1.0,every node/.style={scale=1.0}]
+\matrix[matStyle] {
+  \lbl[0-0]{Src} & \point[0-1] &  &  & \qswap[0-4] & \gate[0-5]{H} & \meter[0-6] &  & \ctrl[0-8] &  & \point[0-10]  \\
+  \lbl[1-0]{\ket{0}} & \point[1-1] & \gate[1-2]{H} & \ctrl[1-3] & \qswap[1-4] &  & \meter[1-6] & \ctrl[1-7] &  &  & \point[1-10]  \\
+  \lbl[2-0]{\ket{0}} & \point[2-1] &  & \targ[2-3] &  &  &  & \gate[2-7]{X} & \gate[2-8]{Z} & \lbl[2-9]{Dest} & \point[2-10]  \\
+   &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-1}{0-6}
+\qw{1-1}{1-6}
+\qw{2-1}{2-10}
+\cw{0-6}{0-10}
+\cw{1-6}{1-10}
+\fwx{0-4}{1-4}
+\qwx{1-3}{2-3}
+\cwx{0-8}{2-8}
+\cwx{1-7}{2-7}
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:Teleport-CF} Teleport}
+\end{figure*}
+
+\begin{figure*}[t]
+\begin{tikzpicture}[scale=1.0,every node/.style={scale=1.0}]
+\matrix[matStyle] {
+\prep[ws0]{\ket{0}}    & \ctrl[c0] &           & \meter[we0] &                    &              & \prep[ws5]{\ket{0}} & \point[we5] \\
+\prep[ws1]{\ket{0}}    &           & \qswap[t1] &             &                    & \gate[h1]{H} & \mg[mgt1]{MG} &     & \point[we1] \\
+\prep[ws2]{\ket{0}}    &           &           &             &                    & \gate{X}     &               &     & \point[we2] \\
+\prep[ws3]{\ket{0}}    & \targ[t0] &           &             & \gate[1-1]{R(\phi)} &              & \mg[mgb1]{MG} &     & \point[we3] \\
+\prep[ws4]{\ket{\psi}} &           & \qswap[c1] &             &                    &              & \ctrlo[c2]    &     & \point[we4] \\
+};
+% Put multigates here
+\multigate{mgt1}{mgb1}{MG};
+
+% Put annotations here
+\draw[dashed,draw=gray] ([shift=(135:2pt)]we0.north west) rectangle ([shift=(-45:2pt)]1-1.south east) ;
+
+% Draw wires on the background
+\begin{pgfonlayer}{background}
+\foreach \x in {0,...,5} \qw{ws\x}{we\x};
+\foreach \x in {0,...,1} \qwx{c\x}{t\x};
+\qwx{c2}{mgb1}
+\cwx{we0}{h1}
+\cwx{we0}{1-1}
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:Test} Test figure}
+\end{figure*}
+
+\begin{figure*}
+\begin{tikzpicture}[scale=0.7,every node/.style={scale=0.7}]
+\matrix[matStyle] {
+  \lbl[0-0]{Anc0} & \point[0-1] &  &  &  &  & \gate[0-6]{H} & \ctrl[0-7] & \ctrl[0-8] & \ctrl[0-9] & \ctrl[0-10] & \gate[0-11]{H} & \meter[0-12] &  &  &  &  &  &  & \ctrlo[0-19] & \ctrlo[0-20] & \ctrlo[0-21] & \ctrl[0-22] & \ctrl[0-23] & \ctrl[0-24] & \ctrl[0-25]  \\
+  \lbl[1-0]{Anc1} & \point[1-1] &  &  &  &  & \gate[1-6]{H} & \ctrl[1-7] & \ctrl[1-8] &  & \ctrl[1-10] & \ctrl[1-11] & \gate[1-12]{H} & \meter[1-13] &  &  &  &  &  & \ctrlo[1-19] & \ctrl[1-20] & \ctrl[1-21] & \ctrlo[1-22] & \ctrlo[1-23] & \ctrl[1-24] & \ctrl[1-25]  \\
+  \lbl[2-0]{Anc2} & \point[2-1] &  &  &  &  & \gate[2-6]{H} & \ctrl[2-7] &  & \ctrl[2-9] & \ctrl[2-10] &  & \ctrl[2-12] & \gate[2-13]{H} & \meter[2-14] &  &  &  &  & \ctrl[2-19] & \ctrlo[2-20] & \ctrl[2-21] & \ctrlo[2-22] & \ctrl[2-23] & \ctrlo[2-24] & \ctrl[2-25]  \\
+  \lbl[3-0]{Anc3} & \point[3-1] &  &  &  &  & \gate[3-6]{H} &  & \ctrl[3-8] &  &  & \ctrl[3-11] & \ctrl[3-12] & \ctrl[3-13] & \gate[3-14]{H} & \meter[3-15] &  &  & \ctrlo[3-18] & \ctrlo[3-19] & \ctrlo[3-20] & \ctrl[3-21] & \ctrl[3-22] & \ctrl[3-23] & \ctrl[3-24] & \gate[3-25]{\ket{0}}  \\
+  \lbl[4-0]{Anc4} & \point[4-1] &  &  &  &  & \gate[4-6]{H} &  & \ctrl[4-8] &  & \ctrl[4-10] &  &  & \ctrl[4-13] & \ctrl[4-14] & \gate[4-15]{H} & \meter[4-16] &  & \ctrlo[4-18] & \ctrl[4-19] & \ctrl[4-20] & \ctrlo[4-21] & \ctrlo[4-22] & \ctrl[4-23] & \ctrl[4-24] & \gate[4-25]{\ket{0}}  \\
+  \lbl[5-0]{Anc5} & \point[5-1] &  &  &  &  & \gate[5-6]{H} &  & \ctrl[5-8] &  &  & \ctrl[5-11] & \ctrl[5-12] &  &  & \ctrl[5-15] & \gate[5-16]{H} & \meter[5-17] & \ctrl[5-18] & \ctrlo[5-19] & \ctrl[5-20] & \ctrlo[5-21] & \ctrl[5-22] & \ctrlo[5-23] & \ctrl[5-24] & \gate[5-25]{\ket{0}}  \\
+  \lbl[6-0]{Q0} & \point[6-1] &  &  & \targ[6-4] & \targ[6-5] &  & \targ[6-7] & \gate[6-8]{Z} &  &  &  &  &  &  &  &  &  & \gate[6-18]{X} & \gate[6-19]{Z} &  &  &  &  &  & \point[6-25]  \\
+  \lbl[7-0]{Q0} & \point[7-1] &  & \targ[7-3] &  & \targ[7-5] &  & \targ[7-7] & \gate[7-8]{Z} &  &  &  &  &  &  &  &  &  &  & \gate[7-19]{X} & \gate[7-20]{Z} &  &  &  &  & \point[7-25]  \\
+  \lbl[8-0]{Q0} & \point[8-1] &  & \targ[8-3] & \targ[8-4] &  &  &  & \targ[8-8] & \targ[8-9] & \gate[8-10]{Z} & \gate[8-11]{Z} &  &  &  &  &  &  &  &  & \gate[8-20]{X} & \gate[8-21]{Z} &  &  &  & \point[8-25]  \\
+  \lbl[9-0]{Q0} & \point[9-1] &  & \targ[9-3] & \targ[9-4] & \targ[9-5] &  & \targ[9-7] & \gate[9-8]{Z} &  &  &  &  &  &  &  &  &  &  &  &  & \gate[9-21]{X} & \gate[9-22]{Z} &  &  & \point[9-25]  \\
+  \lbl[10-0]{Q0} & \point[10-1] & \gate[10-2]{H} & \ctrl[10-3] & \ctrl[10-4] & \ctrl[10-5] &  &  & \targ[10-8] &  & \targ[10-10] & \gate[10-11]{Z} & \gate[10-12]{Z} &  &  &  &  &  &  &  &  &  & \gate[10-22]{X} & \gate[10-23]{Z} &  & \point[10-25]  \\
+  \lbl[11-0]{Q0} & \point[11-1] & \gate[11-2]{H} & \ctrl[11-3] & \ctrl[11-4] & \ctrl[11-5] &  &  &  & \targ[11-9] & \targ[11-10] &  & \gate[11-12]{Z} & \gate[11-13]{Z} &  &  &  &  &  &  &  &  &  & \gate[11-23]{X} & \gate[11-24]{Z} & \point[11-25]  \\
+  \lbl[12-0]{Q0} & \point[12-1] & \gate[12-2]{H} & \ctrl[12-3] & \ctrl[12-4] & \ctrl[12-5] &  &  &  &  & \targ[12-10] & \targ[12-11] & \targ[12-12] & \gate[12-13]{Z} & \gate[12-14]{Z} & \gate[12-15]{Z} &  &  &  &  &  &  &  &  & \gate[12-24]{X} & \gate[12-25]{Z}  \\
+   &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-1}{0-12}
+\qw{1-1}{1-13}
+\qw{2-1}{2-14}
+\qw{3-1}{3-15}
+\qw{3-25}{3-25}
+\qw{4-1}{4-16}
+\qw{4-25}{4-25}
+\qw{5-1}{5-17}
+\qw{5-25}{5-25}
+\qw{6-1}{6-25}
+\qw{7-1}{7-25}
+\qw{8-1}{8-25}
+\qw{9-1}{9-25}
+\qw{10-1}{10-25}
+\qw{11-1}{11-25}
+\qw{12-1}{12-25}
+\cw{0-12}{0-25}
+\cw{1-13}{1-25}
+\cw{2-14}{2-25}
+\cw{3-15}{3-25}
+\cw{4-16}{4-25}
+\cw{5-17}{5-25}
+\qwxB{0-7}{9-7}
+\qwxB{0-8}{10-8}
+\qwxB{0-9}{11-9}
+\qwxB{0-10}{12-10}
+\qwxB{1-7}{7-7}
+\qwxB{1-8}{8-8}
+\qwxB{1-10}{11-10}
+\qwxB{1-11}{12-11}
+\qwxB{2-7}{6-7}
+\qwxB{2-9}{8-9}
+\qwxB{2-10}{10-10}
+\qwxB{2-12}{12-12}
+\qwxB{3-8}{9-8}
+\qwxB{3-11}{10-11}
+\qwxB{3-12}{11-12}
+\qwxB{3-13}{12-13}
+\qwxB{4-8}{7-8}
+\qwxB{4-10}{8-10}
+\qwxB{4-13}{11-13}
+\qwxB{4-14}{12-14}
+\qwxB{5-8}{6-8}
+\qwxB{5-11}{8-11}
+\qwxB{5-12}{10-12}
+\qwxB{5-15}{12-15}
+\qwxB{7-3}{10-3}
+\qwxB{8-4}{10-4}
+\qwxB{9-5}{10-5}
+\qwxB{8-3}{11-3}
+\qwxB{9-4}{11-4}
+\qwxB{6-5}{11-5}
+\qwxB{9-3}{12-3}
+\qwxB{6-4}{12-4}
+\qwxB{7-5}{12-5}
+\cwxB{0-19}{6-19}
+\cwxB{0-20}{7-20}
+\cwxB{0-21}{8-21}
+\cwxB{0-22}{9-22}
+\cwxB{0-23}{10-23}
+\cwxB{0-24}{11-24}
+\cwxB{0-25}{12-25}
+\cwxB{3-18}{6-18}
+\cwxB{3-19}{7-19}
+\cwxB{3-20}{8-20}
+\cwxB{3-21}{9-21}
+\cwxB{3-22}{10-22}
+\cwxB{3-23}{11-23}
+\cwxB{3-24}{12-24}
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:QECC-tin1} QECC-tin, Part 1}
+\end{figure*}
+
+\begin{figure*}
+\begin{tikzpicture}[scale=1.0,every node/.style={scale=1.0}]
+\matrix[matStyle] {
+  \point[0-0] &  & \ctrl[0-2] &  &  &  &  &  &  &  &  &  & \ctrl[0-12] &  & \point[0-14]  \\
+  \point[1-0] &  & \targ[1-2] & \ctrl[1-3] &  &  &  &  &  &  &  & \ctrl[1-11] & \targ[1-12] &  & \point[1-14]  \\
+  \point[2-0] &  &  & \targ[2-3] & \ctrl[2-4] &  &  &  &  &  & \ctrl[2-10] & \targ[2-11] &  &  & \point[2-14]  \\
+  \point[3-0] &  &  &  & \targ[3-4] & \ctrl[3-5] &  &  &  & \ctrl[3-9] & \targ[3-10] &  &  &  & \point[3-14]  \\
+  \point[4-0] &  &  &  &  & \targ[4-5] & \ctrl[4-6] &  & \ctrl[4-8] & \targ[4-9] &  &  &  &  & \point[4-14]  \\
+  \point[5-0] & \gate[5-1]{H} &  &  &  &  & \targ[5-6] & \gate[5-7]{-\theta^Z} & \targ[5-8] &  &  &  &  & \gate[5-13]{H} & \point[5-14]  \\
+   &  &  &  &  &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-0}{0-14} \qw{1-0}{1-14} \qw{2-0}{2-14} \qw{3-0}{3-14} \qw{4-0}{4-14} \qw{5-0}{5-14} 
+\qwx{0-2}{1-2} \qwx{0-12}{1-12} \qwx{1-3}{2-3} \qwx{1-11}{2-11} \qwx{2-4}{3-4} \qwx{2-10}{3-10} 
+\qwx{3-5}{4-5} \qwx{3-9}{4-9} \qwx{4-6}{5-6} \qwx{4-8}{5-8} 
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:HpX} HpX}
+\end{figure*}
+
+\begin{figure*}
+\begin{tikzpicture}[scale=1.0,every node/.style={scale=1.0}]
+\matrix[matStyle] {
+  \point[0-0] &  & \ctrl[0-2] &  &  &  &  &  &  &  &  &  & \ctrl[0-12] &  & \point[0-14]  \\
+  \point[1-0] &  & \targ[1-2] & \ctrl[1-3] &  &  &  &  &  &  &  & \ctrl[1-11] & \targ[1-12] &  & \point[1-14]  \\
+  \point[2-0] &  &  & \targ[2-3] & \ctrl[2-4] &  &  &  &  &  & \ctrl[2-10] & \targ[2-11] &  &  & \point[2-14]  \\
+  \point[3-0] &  &  &  & \targ[3-4] & \ctrl[3-5] &  &  &  & \ctrl[3-9] & \targ[3-10] &  &  &  & \point[3-14]  \\
+  \point[4-0] &  &  &  &  & \targ[4-5] & \ctrl[4-6] &  & \ctrl[4-8] & \targ[4-9] &  &  &  &  & \point[4-14]  \\
+  \point[5-0] & \gate[5-1]{Y} &  &  &  &  & \targ[5-6] & \gate[5-7]{-\theta^Z} & \targ[5-8] &  &  &  &  & \gate[5-13]{Y^\dagger} & \point[5-14]  \\
+   &  &  &  &  &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-0}{0-14} \qw{1-0}{1-14} \qw{2-0}{2-14} \qw{3-0}{3-14} \qw{4-0}{4-14} \qw{5-0}{5-14} 
+\qwx{0-2}{1-2} \qwx{0-12}{1-12} \qwx{1-3}{2-3} \qwx{1-11}{2-11} \qwx{2-4}{3-4} \qwx{2-10}{3-10} 
+\qwx{3-5}{4-5} \qwx{3-9}{4-9} \qwx{4-6}{5-6} \qwx{4-8}{5-8} 
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:HpY} HpY}
+\end{figure*}
+
+\begin{figure*}
+\begin{tikzpicture}[scale=0.7,every node/.style={scale=0.5}]
+\matrix[matStyle] {
+  \point[0-0] &  &  &  &  & \mg[0-5]{Hpq} &  &  &  & \mg[0-9]{Hpq} &  &  &  & \gate[0-13]{Hpqqp} &  &  &  &  & \point[0-18]  \\
+  \point[1-0] &  &  &  &  & \mg[1-5]{Hpq} &  &  &  & \mg[1-9]{Hpq} &  & \mg[1-11]{Hpq} &  &  & \gate[1-14]{Hpqqp} &  &  &  & \point[1-18]  \\
+  \point[2-0] & \gate[2-1]{Hpp} &  &  &  &  &  & \mg[2-7]{Hpq} &  &  &  & \mg[2-11]{Hpq} &  &  &  & \gate[2-15]{Hpqqp} &  &  & \point[2-18]  \\
+  \point[3-0] &  &  & \gate[3-3]{Hpp} &  &  &  & \mg[3-7]{Hpq} &  &  &  &  &  &  &  &  & \gate[3-16]{Hpqqp} &  & \point[3-18]  \\
+  \point[4-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[4-18]  \\
+  \point[5-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \gate[5-17]{Hpp} & \point[5-18]  \\
+  \point[6-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[6-18]  \\
+  \point[7-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[7-18]  \\
+  \point[8-0] &  &  &  &  &  & \mg[8-6]{Hpq} &  &  &  & \mg[8-10]{Hpq} &  &  & \gate[8-13]{Hpqqp} &  &  &  &  & \point[8-18]  \\
+  \point[9-0] &  &  &  &  &  & \mg[9-6]{Hpq} &  &  &  & \mg[9-10]{Hpq} &  & \mg[9-12]{Hpq} &  & \gate[9-14]{Hpqqp} &  &  &  & \point[9-18]  \\
+  \point[10-0] &  & \gate[10-2]{Hpp} &  &  &  &  &  & \mg[10-8]{Hpq} &  &  &  & \mg[10-12]{Hpq} &  &  & \gate[10-15]{Hpqqp} &  &  & \point[10-18]  \\
+  \point[11-0] &  &  &  & \gate[11-4]{Hpp} &  &  &  & \mg[11-8]{Hpq} &  &  &  &  &  &  &  & \gate[11-16]{Hpqqp} &  & \point[11-18]  \\
+  \point[12-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[12-18]  \\
+  \point[13-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \gate[13-18]{Hpp}  \\
+  \point[14-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[14-18]  \\
+  \point[15-0] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[15-18]  \\
+   &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+\multigate{0-5}{1-5}{Hpq}
+\multigate{0-9}{1-9}{Hpq}
+\multigate{1-11}{2-11}{Hpq}
+\multigate{2-7}{3-7}{Hpq}
+\multigate{8-6}{9-6}{Hpq}
+\multigate{8-10}{9-10}{Hpq}
+\multigate{9-12}{10-12}{Hpq}
+\multigate{10-8}{11-8}{Hpq}
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-0}{0-18} \qw{1-0}{1-18} \qw{2-0}{2-18} \qw{3-0}{3-18} \qw{4-0}{4-18} \qw{5-0}{5-18}
+\qw{6-0}{6-18} \qw{7-0}{7-18} \qw{8-0}{8-18} \qw{9-0}{9-18} \qw{10-0}{10-18} \qw{11-0}{11-18}
+\qw{12-0}{12-18} \qw{13-0}{13-18} \qw{14-0}{14-18} \qw{15-0}{15-18} \dwx{0-13}{8-13}
+\dwx{1-14}{9-14} \dwx{2-15}{10-15} \dwx{3-16}{11-16}
+
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:HubbardO1} Hubbard overview, Part 1}
+\end{figure*}
+\begin{figure*}
+\begin{tikzpicture}[scale=0.7,every node/.style={scale=0.5}]
+\matrix[matStyle] {
+   & \point[0-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[0-35]  \\
+   & \point[1-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[1-35]  \\
+   & \point[2-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[2-35]  \\
+   & \point[3-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[3-35]  \\
+   & \point[4-19] &  &  &  & \mg[4-23]{Hpq} &  &  &  & \mg[4-27]{Hpq} &  &  &  & \gate[4-31]{Hpqqp} &  &  &  & \point[4-35]  \\
+   & \point[5-19] &  &  &  & \mg[5-23]{Hpq} &  &  &  & \mg[5-27]{Hpq} &  & \mg[5-29]{Hpq} &  &  & \gate[5-32]{Hpqqp} &  &  & \point[5-35]  \\
+   & \gate[6-19]{Hpp} &  &  &  &  &  & \mg[6-25]{Hpq} &  &  &  & \mg[6-29]{Hpq} &  &  &  & \gate[6-33]{Hpqqp} &  & \point[6-35]  \\
+   & \point[7-19] &  & \gate[7-21]{Hpp} &  &  &  & \mg[7-25]{Hpq} &  &  &  &  &  &  &  &  & \gate[7-34]{Hpqqp} & \point[7-35]  \\
+   & \point[8-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[8-35]  \\
+   & \point[9-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[9-35]  \\
+   & \point[10-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[10-35]  \\
+   & \point[11-19] &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[11-35]  \\
+   & \point[12-19] &  &  &  &  & \mg[12-24]{Hpq} &  &  &  & \mg[12-28]{Hpq} &  &  & \gate[12-31]{Hpqqp} &  &  &  & \point[12-35]  \\
+   & \point[13-19] &  &  &  &  & \mg[13-24]{Hpq} &  &  &  & \mg[13-28]{Hpq} &  & \mg[13-30]{Hpq} &  & \gate[13-32]{Hpqqp} &  &  & \point[13-35]  \\
+   & \point[14-19] & \gate[14-20]{Hpp} &  &  &  &  &  & \mg[14-26]{Hpq} &  &  &  & \mg[14-30]{Hpq} &  &  & \gate[14-33]{Hpqqp} &  & \point[14-35]  \\
+   & \point[15-19] &  &  & \gate[15-22]{Hpp} &  &  &  & \mg[15-26]{Hpq} &  &  &  &  &  &  &  & \gate[15-34]{Hpqqp} & \point[15-35]  \\
+   &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+\multigate{4-23}{5-23}{Hpq}
+\multigate{4-27}{5-27}{Hpq}
+\multigate{5-29}{6-29}{Hpq}
+\multigate{6-25}{7-25}{Hpq}
+\multigate{12-24}{13-24}{Hpq}
+\multigate{12-28}{13-28}{Hpq}
+\multigate{13-30}{14-30}{Hpq}
+\multigate{14-26}{15-26}{Hpq}
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-19}{0-35} \qw{1-19}{1-35} \qw{2-19}{2-35} \qw{3-19}{3-35} \qw{4-19}{4-35} \qw{5-19}{5-35}
+\qw{6-19}{6-35} \qw{7-19}{7-35} \qw{8-19}{8-35} \qw{9-19}{9-35} \qw{10-19}{10-35}
+\qw{11-19}{11-35} \qw{12-19}{12-35} \qw{13-19}{13-35} \qw{14-19}{14-35} \qw{15-19}{15-35}
+\dwx{4-31}{12-31} \dwx{5-32}{13-32} \dwx{6-33}{14-33} \dwx{7-34}{15-34}
+
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:HubbardO2} Hubbard overview, Part 2}
+\end{figure*}
+
+\begin{figure*}
+\begin{tikzpicture}[scale=0.7,every node/.style={scale=0.5}]
+\matrix[matStyle] {
+  \point[0-0] & \gate[0-1]{H} & \ctrl[0-2] &  & \ctrl[0-4] & \gate[0-5]{H} & \gate[0-6]{Y} & \ctrl[0-7] &  & \ctrl[0-9] & \gate[0-10]{Y^\dagger} &  &  &  &  &  &  &  &  &  &  & \gate[0-21]{H} & \ctrl[0-22] &  &  &  & \ctrl[0-26] & \gate[0-27]{H}  \\
+  \point[1-0] & \gate[1-1]{H} & \targ[1-2] & \gate[1-3]{-\theta^Z/2} & \targ[1-4] & \gate[1-5]{H} & \gate[1-6]{Y} & \targ[1-7] & \gate[1-8]{-\theta^Z/2} & \targ[1-9] & \gate[1-10]{Y^\dagger} &  &  &  &  &  &  &  &  &  &  &  & \targ[1-22] & \ctrl[1-23] &  & \ctrl[1-25] & \targ[1-26] & \point[1-27]  \\
+  \point[2-0] & \gate[2-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[2-11]{H} & \ctrl[2-12] &  & \ctrl[2-14] & \gate[2-15]{H} & \gate[2-16]{Y} & \ctrl[2-17] &  & \ctrl[2-19] & \gate[2-20]{Y^\dagger} & \gate[2-21]{H} &  & \targ[2-23] & \gate[2-24]{-\theta^Z/2} & \targ[2-25] &  & \gate[2-27]{H}  \\
+  \point[3-0] & \gate[3-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[3-11]{H} & \targ[3-12] & \gate[3-13]{-\theta^Z/2} & \targ[3-14] & \gate[3-15]{H} & \gate[3-16]{Y} & \targ[3-17] & \gate[3-18]{-\theta^Z/2} & \targ[3-19] & \gate[3-20]{Y^\dagger} &  &  &  &  &  &  & \point[3-27]  \\
+  \point[4-0] &  &  &  &  &  &  &  &  &  &  & \gate[4-11]{H} & \ctrl[4-12] &  & \ctrl[4-14] & \gate[4-15]{H} & \gate[4-16]{Y} & \ctrl[4-17] &  & \ctrl[4-19] & \gate[4-20]{Y^\dagger} & \gate[4-21]{H} & \ctrl[4-22] &  &  &  & \ctrl[4-26] & \gate[4-27]{H}  \\
+  \point[5-0] & \gate[5-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[5-11]{H} & \targ[5-12] & \gate[5-13]{-\theta^Z/2} & \targ[5-14] & \gate[5-15]{H} & \gate[5-16]{Y} & \targ[5-17] & \gate[5-18]{-\theta^Z/2} & \targ[5-19] & \gate[5-20]{Y^\dagger} &  & \targ[5-22] & \ctrl[5-23] &  & \ctrl[5-25] & \targ[5-26] & \point[5-27]  \\
+  \point[6-0] & \gate[6-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[6-11]{H} & \ctrl[6-12] &  & \ctrl[6-14] & \gate[6-15]{H} & \gate[6-16]{Y} & \ctrl[6-17] &  & \ctrl[6-19] & \gate[6-20]{Y^\dagger} & \gate[6-21]{H} &  & \targ[6-23] & \gate[6-24]{-\theta^Z/2} & \targ[6-25] &  & \gate[6-27]{H}  \\
+  \point[7-0] & \gate[7-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[7-11]{H} & \targ[7-12] & \gate[7-13]{-\theta^Z/2} & \targ[7-14] & \gate[7-15]{H} & \gate[7-16]{Y} & \targ[7-17] & \gate[7-18]{-\theta^Z/2} & \targ[7-19] & \gate[7-20]{Y^\dagger} &  &  &  &  &  &  & \point[7-27]  \\
+  \point[8-0] & \gate[8-1]{H} & \ctrl[8-2] &  & \ctrl[8-4] & \gate[8-5]{H} & \gate[8-6]{Y} & \ctrl[8-7] &  & \ctrl[8-9] & \gate[8-10]{Y^\dagger} &  &  &  &  &  &  &  &  &  &  & \gate[8-21]{H} & \ctrl[8-22] &  &  &  & \ctrl[8-26] & \gate[8-27]{H}  \\
+  \point[9-0] & \gate[9-1]{H} & \targ[9-2] & \gate[9-3]{-\theta^Z/2} & \targ[9-4] & \gate[9-5]{H} & \gate[9-6]{Y} & \targ[9-7] & \gate[9-8]{-\theta^Z/2} & \targ[9-9] & \gate[9-10]{Y^\dagger} &  &  &  &  &  &  &  &  &  &  &  & \targ[9-22] & \ctrl[9-23] &  & \ctrl[9-25] & \targ[9-26] & \point[9-27]  \\
+  \point[10-0] & \gate[10-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[10-11]{H} & \ctrl[10-12] &  & \ctrl[10-14] & \gate[10-15]{H} & \gate[10-16]{Y} & \ctrl[10-17] &  & \ctrl[10-19] & \gate[10-20]{Y^\dagger} & \gate[10-21]{H} &  & \targ[10-23] & \gate[10-24]{-\theta^Z/2} & \targ[10-25] &  & \gate[10-27]{H}  \\
+  \point[11-0] & \gate[11-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[11-11]{H} & \targ[11-12] & \gate[11-13]{-\theta^Z/2} & \targ[11-14] & \gate[11-15]{H} & \gate[11-16]{Y} & \targ[11-17] & \gate[11-18]{-\theta^Z/2} & \targ[11-19] & \gate[11-20]{Y^\dagger} &  &  &  &  &  &  & \point[11-27]  \\
+  \point[12-0] &  &  &  &  &  &  &  &  &  &  & \gate[12-11]{H} & \ctrl[12-12] &  & \ctrl[12-14] & \gate[12-15]{H} & \gate[12-16]{Y} & \ctrl[12-17] &  & \ctrl[12-19] & \gate[12-20]{Y^\dagger} & \gate[12-21]{H} & \ctrl[12-22] &  &  &  & \ctrl[12-26] & \gate[12-27]{H}  \\
+  \point[13-0] & \gate[13-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[13-11]{H} & \targ[13-12] & \gate[13-13]{-\theta^Z/2} & \targ[13-14] & \gate[13-15]{H} & \gate[13-16]{Y} & \targ[13-17] & \gate[13-18]{-\theta^Z/2} & \targ[13-19] & \gate[13-20]{Y^\dagger} &  & \targ[13-22] & \ctrl[13-23] &  & \ctrl[13-25] & \targ[13-26] & \point[13-27]  \\
+  \point[14-0] & \gate[14-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[14-11]{H} & \ctrl[14-12] &  & \ctrl[14-14] & \gate[14-15]{H} & \gate[14-16]{Y} & \ctrl[14-17] &  & \ctrl[14-19] & \gate[14-20]{Y^\dagger} & \gate[14-21]{H} &  & \targ[14-23] & \gate[14-24]{-\theta^Z/2} & \targ[14-25] &  & \gate[14-27]{H}  \\
+  \point[15-0] & \gate[15-1]{-T\theta} &  &  &  &  &  &  &  &  &  & \gate[15-11]{H} & \targ[15-12] & \gate[15-13]{-\theta^Z/2} & \targ[15-14] & \gate[15-15]{H} & \gate[15-16]{Y} & \targ[15-17] & \gate[15-18]{-\theta^Z/2} & \targ[15-19] & \gate[15-20]{Y^\dagger} &  &  &  &  &  &  & \point[15-27]  \\
+   &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-0}{0-27} \qw{1-0}{1-27} \qw{2-0}{2-27} \qw{3-0}{3-27} \qw{4-0}{4-27} \qw{5-0}{5-27}
+\qw{6-0}{6-27} \qw{7-0}{7-27} \qw{8-0}{8-27} \qw{9-0}{9-27} \qw{10-0}{10-27} \qw{11-0}{11-27}
+\qw{12-0}{12-27} \qw{13-0}{13-27} \qw{14-0}{14-27} \qw{15-0}{15-27} \qwx{0-2}{1-2}
+\qwx{0-4}{1-4} \qwx{0-7}{1-7} \qwx{0-9}{1-9} \qwx{0-22}{1-22} \qwx{0-26}{1-26} \qwx{1-23}{2-23}
+\qwx{1-25}{2-25} \qwx{2-12}{3-12} \qwx{2-14}{3-14} \qwx{2-17}{3-17} \qwx{2-19}{3-19}
+\qwx{4-12}{5-12} \qwx{4-14}{5-14} \qwx{4-17}{5-17} \qwx{4-19}{5-19} \qwx{4-22}{5-22}
+\qwx{4-26}{5-26} \qwx{5-23}{6-23} \qwx{5-25}{6-25} \qwx{6-12}{7-12} \qwx{6-14}{7-14}
+\qwx{6-17}{7-17} \qwx{6-19}{7-19} \qwx{8-2}{9-2} \qwx{8-4}{9-4} \qwx{8-7}{9-7} \qwx{8-9}{9-9}
+\qwx{8-22}{9-22} \qwx{8-26}{9-26} \qwx{9-23}{10-23} \qwx{9-25}{10-25} \qwx{10-12}{11-12}
+\qwx{10-14}{11-14} \qwx{10-17}{11-17} \qwx{10-19}{11-19} \qwx{12-12}{13-12} \qwx{12-14}{13-14}
+\qwx{12-17}{13-17} \qwx{12-19}{13-19} \qwx{12-22}{13-22} \qwx{12-26}{13-26} \qwx{13-23}{14-23}
+\qwx{13-25}{14-25} \qwx{14-12}{15-12} \qwx{14-14}{15-14} \qwx{14-17}{15-17} \qwx{14-19}{15-19}
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:HubbardDetail} Hubbard detail, Part 1}
+\end{figure*}
+\begin{figure*}
+\begin{tikzpicture}[scale=0.7,every node/.style={scale=0.5}]
+\matrix[matStyle] {
+   & \gate[0-28]{Y} & \ctrl[0-29] &  &  &  & \ctrl[0-33] & \gate[0-34]{Y^\dagger} & \gate[0-35]{\theta_{P}^Z/4} & \ctrl[0-36] &  & \ctrl[0-38] &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[0-53]  \\
+   & \point[1-28] & \targ[1-29] & \ctrl[1-30] &  & \ctrl[1-32] & \targ[1-33] &  & \gate[1-35]{H} & \ctrl[1-36] &  &  &  & \ctrl[1-40] & \gate[1-41]{H} & \gate[1-42]{Y} & \ctrl[1-43] &  &  &  & \ctrl[1-47] & \gate[1-48]{Y^\dagger} & \gate[1-49]{\theta_{P}^Z/4} & \ctrl[1-50] &  & \ctrl[1-52] & \point[1-53]  \\
+   & \gate[2-28]{Y} &  & \targ[2-30] & \gate[2-31]{-\theta^Z/2} & \targ[2-32] &  & \gate[2-34]{Y^\dagger} &  & \targ[2-36] & \ctrl[2-37] &  & \ctrl[2-39] & \targ[2-40] &  &  & \targ[2-43] & \ctrl[2-44] &  & \ctrl[2-46] & \targ[2-47] &  & \gate[2-49]{\theta_{P}^Z/4} & \ctrl[2-50] &  & \ctrl[2-52] & \point[2-53]  \\
+   & \point[3-28] &  &  &  &  &  &  & \gate[3-35]{H} &  & \targ[3-37] & \gate[3-38]{-\theta^Z/2} & \targ[3-39] &  & \gate[3-41]{H} & \gate[3-42]{Y} &  & \targ[3-44] & \gate[3-45]{-\theta^Z/2} & \targ[3-46] &  & \gate[3-48]{Y^\dagger} & \gate[3-49]{\theta_{P}^Z/4} & \ctrl[3-50] &  & \ctrl[3-52] & \point[3-53]  \\
+   & \gate[4-28]{Y} & \ctrl[4-29] &  &  &  & \ctrl[4-33] & \gate[4-34]{Y^\dagger} & \gate[4-35]{\theta_{P}^Z/4} & \ctrl[4-36] &  & \ctrl[4-38] &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[4-53]  \\
+   & \point[5-28] & \targ[5-29] & \ctrl[5-30] &  & \ctrl[5-32] & \targ[5-33] &  & \gate[5-35]{H} & \ctrl[5-36] &  &  &  & \ctrl[5-40] & \gate[5-41]{H} & \gate[5-42]{Y} & \ctrl[5-43] &  &  &  & \ctrl[5-47] & \gate[5-48]{Y^\dagger} & \gate[5-49]{\theta_{P}^Z/4} & \ctrl[5-50] &  & \ctrl[5-52] & \point[5-53]  \\
+   & \gate[6-28]{Y} &  & \targ[6-30] & \gate[6-31]{-\theta^Z/2} & \targ[6-32] &  & \gate[6-34]{Y^\dagger} &  & \targ[6-36] & \ctrl[6-37] &  & \ctrl[6-39] & \targ[6-40] &  &  & \targ[6-43] & \ctrl[6-44] &  & \ctrl[6-46] & \targ[6-47] &  & \gate[6-49]{\theta_{P}^Z/4} & \ctrl[6-50] &  & \ctrl[6-52] & \point[6-53]  \\
+   & \point[7-28] &  &  &  &  &  &  & \gate[7-35]{H} &  & \targ[7-37] & \gate[7-38]{-\theta^Z/2} & \targ[7-39] &  & \gate[7-41]{H} & \gate[7-42]{Y} &  & \targ[7-44] & \gate[7-45]{-\theta^Z/2} & \targ[7-46] &  & \gate[7-48]{Y^\dagger} & \gate[7-49]{\theta_{P}^Z/4} & \ctrl[7-50] &  & \ctrl[7-52] & \point[7-53]  \\
+   & \gate[8-28]{Y} & \ctrl[8-29] &  &  &  & \ctrl[8-33] & \gate[8-34]{Y^\dagger} & \gate[8-35]{\theta_{Q}^Z/4} & \targ[8-36] & \gate[8-37]{-\theta_{PQ}^Z/4} & \targ[8-38] &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[8-53]  \\
+   & \point[9-28] & \targ[9-29] & \ctrl[9-30] &  & \ctrl[9-32] & \targ[9-33] &  & \gate[9-35]{H} & \ctrl[9-36] &  &  &  & \ctrl[9-40] & \gate[9-41]{H} & \gate[9-42]{Y} & \ctrl[9-43] &  &  &  & \ctrl[9-47] & \gate[9-48]{Y^\dagger} & \gate[9-49]{\theta_{Q}^Z/4} & \targ[9-50] & \gate[9-51]{-\theta_{PQ}^Z/4} & \targ[9-52] & \point[9-53]  \\
+   & \gate[10-28]{Y} &  & \targ[10-30] & \gate[10-31]{-\theta^Z/2} & \targ[10-32] &  & \gate[10-34]{Y^\dagger} &  & \targ[10-36] & \ctrl[10-37] &  & \ctrl[10-39] & \targ[10-40] &  &  & \targ[10-43] & \ctrl[10-44] &  & \ctrl[10-46] & \targ[10-47] &  & \gate[10-49]{\theta_{Q}^Z/4} & \targ[10-50] & \gate[10-51]{-\theta_{PQ}^Z/4} & \targ[10-52] & \point[10-53]  \\
+   & \point[11-28] &  &  &  &  &  &  & \gate[11-35]{H} &  & \targ[11-37] & \gate[11-38]{-\theta^Z/2} & \targ[11-39] &  & \gate[11-41]{H} & \gate[11-42]{Y} &  & \targ[11-44] & \gate[11-45]{-\theta^Z/2} & \targ[11-46] &  & \gate[11-48]{Y^\dagger} & \gate[11-49]{\theta_{Q}^Z/4} & \targ[11-50] & \gate[11-51]{-\theta_{PQ}^Z/4} & \targ[11-52] & \point[11-53]  \\
+   & \gate[12-28]{Y} & \ctrl[12-29] &  &  &  & \ctrl[12-33] & \gate[12-34]{Y^\dagger} & \gate[12-35]{\theta_{Q}^Z/4} & \targ[12-36] & \gate[12-37]{-\theta_{PQ}^Z/4} & \targ[12-38] &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \point[12-53]  \\
+   & \point[13-28] & \targ[13-29] & \ctrl[13-30] &  & \ctrl[13-32] & \targ[13-33] &  & \gate[13-35]{H} & \ctrl[13-36] &  &  &  & \ctrl[13-40] & \gate[13-41]{H} & \gate[13-42]{Y} & \ctrl[13-43] &  &  &  & \ctrl[13-47] & \gate[13-48]{Y^\dagger} & \gate[13-49]{\theta_{Q}^Z/4} & \targ[13-50] & \gate[13-51]{-\theta_{PQ}^Z/4} & \targ[13-52] & \point[13-53]  \\
+   & \gate[14-28]{Y} &  & \targ[14-30] & \gate[14-31]{-\theta^Z/2} & \targ[14-32] &  & \gate[14-34]{Y^\dagger} &  & \targ[14-36] & \ctrl[14-37] &  & \ctrl[14-39] & \targ[14-40] &  &  & \targ[14-43] & \ctrl[14-44] &  & \ctrl[14-46] & \targ[14-47] &  & \gate[14-49]{\theta_{Q}^Z/4} & \targ[14-50] & \gate[14-51]{-\theta_{PQ}^Z/4} & \targ[14-52] & \point[14-53]  \\
+   & \point[15-28] &  &  &  &  &  &  & \gate[15-35]{H} &  & \targ[15-37] & \gate[15-38]{-\theta^Z/2} & \targ[15-39] &  & \gate[15-41]{H} & \gate[15-42]{Y} &  & \targ[15-44] & \gate[15-45]{-\theta^Z/2} & \targ[15-46] &  & \gate[15-48]{Y^\dagger} & \gate[15-49]{\theta_{Q}^Z/4} & \targ[15-50] & \gate[15-51]{-\theta_{PQ}^Z/4} & \targ[15-52] & \point[15-53]  \\
+   &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &   \\
+};
+% multigates go here
+% annotations go here
+% wires go here
+\begin{pgfonlayer}{background}
+\qw{0-28}{0-53} \qw{1-28}{1-53} \qw{2-28}{2-53} \qw{3-28}{3-53} \qw{4-28}{4-53} \qw{5-28}{5-53}
+\qw{6-28}{6-53} \qw{7-28}{7-53} \qw{8-28}{8-53} \qw{9-28}{9-53} \qw{10-28}{10-53}
+\qw{11-28}{11-53} \qw{12-28}{12-53} \qw{13-28}{13-53} \qw{14-28}{14-53} \qw{15-28}{15-53}
+\qwx{0-29}{1-29} \qwx{0-33}{1-33} \qwx{0-36}{8-36} \qwx{0-38}{8-38} \qwx{1-30}{2-30}
+\qwx{1-32}{2-32} \qwx{1-36}{2-36} \qwx{1-40}{2-40} \qwx{1-43}{2-43} \qwx{1-47}{2-47}
+\qwx{1-50}{9-50} \qwx{1-52}{9-52} \qwx{2-37}{3-37} \qwx{2-39}{3-39} \qwx{2-44}{3-44}
+\qwx{2-46}{3-46} \qwx{2-50}{10-50} \qwx{2-52}{10-52} \qwx{3-50}{11-50} \qwx{3-52}{11-52}
+\qwx{4-29}{5-29} \qwx{4-33}{5-33} \qwx{4-36}{12-36} \qwx{4-38}{12-38} \qwx{5-30}{6-30}
+\qwx{5-32}{6-32} \qwx{5-36}{6-36} \qwx{5-40}{6-40} \qwx{5-43}{6-43} \qwx{5-47}{6-47}
+\qwx{5-50}{13-50} \qwx{5-52}{13-52} \qwx{6-37}{7-37} \qwx{6-39}{7-39} \qwx{6-44}{7-44}
+\qwx{6-46}{7-46} \qwx{6-50}{14-50} \qwx{6-52}{14-52} \qwx{7-50}{15-50} \qwx{7-52}{15-52}
+\qwx{8-29}{9-29} \qwx{8-33}{9-33} \qwx{9-30}{10-30} \qwx{9-32}{10-32} \qwx{9-36}{10-36}
+\qwx{9-40}{10-40} \qwx{9-43}{10-43} \qwx{9-47}{10-47} \qwx{10-37}{11-37} \qwx{10-39}{11-39}
+\qwx{10-44}{11-44} \qwx{10-46}{11-46} \qwx{12-29}{13-29} \qwx{12-33}{13-33} \qwx{13-30}{14-30}
+\qwx{13-32}{14-32} \qwx{13-36}{14-36} \qwx{13-40}{14-40} \qwx{13-43}{14-43} \qwx{13-47}{14-47}
+\qwx{14-37}{15-37} \qwx{14-39}{15-39} \qwx{14-44}{15-44} \qwx{14-46}{15-46}
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{\label{fig:HubbardDetail2} Hubbard detail, Part 2}
+\end{figure*}
+
+\end{document}
+\fi

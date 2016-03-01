@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Liquid</name></assembly>
+<members>
+<member name="M:Microsoft.Research.Liquid.Main.Main(System.String[])">
+ <summary>
+ The main entry point for Liquid.
+ </summary>
+</member>
+<member name="M:Microsoft.Research.Liquid.UserSample.rotX(System.Double,Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.Qubit})">
+ <summary>
+ Performs an arbitrary rotation around X. 
+ </summary>
+ <param name="theta">Angle to rotate by</param>
+ <param name="qs">The head qubit of this list is operated on.</param>
+</member>
+</members>
+</doc>

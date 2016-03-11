@@ -20,6 +20,21 @@ If you prefer to remain anonymous, you may instead send an email containing:<br>
 SUB Liquid-news anonymous
 ```
 
+## Videos
+There are several short videos covering various aspects of LIQ&#x1D448;&#x1D456;&#x23D0;&#x232A;: 
+
+* [Station Q Overview](http://research.microsoft.com/apps/video/default.aspx?id=263557)
+* [LIQ<i>Ui</i>|&#x232A; Simulator History](http://research.microsoft.com/apps/video/default.aspx?id=263605)
+* [The Quantum Challenge](http://research.microsoft.com/apps/video/default.aspx?id=263584)
+* [LIQ<i>Ui</i>|&#x232A; Quantum Simulator QuickStart](http://research.microsoft.com/apps/video/default.aspx?id=263046)
+* [LIQ<i>Ui</i>|&#x232A; Quantum Error Correction](http://research.microsoft.com/apps/video/default.aspx?id=263597)
+* [LIQ<i>Ui</i>|&#x232A; Simulation Optimization](http://research.microsoft.com/apps/video/default.aspx?id=263612)
+* [LIQ<i>Ui</i>|&#x232A; Quantum Chemistry](http://research.microsoft.com/apps/video/default.aspx?id=263611)
+
+... as well as an in depth tutorial:
+
+* [Full Tutorial Video](http://research.microsoft.com/apps/video/default.aspx?id=258279) 
+
 ## GitHub
 Posting an issue at [the GitHub site](http://github.com/StationQ/Liquid/issues) is a good way to get the attention of the development team as well as the user community. In many cases, you may be able to find the answer to your question in issues that have been previously answered.
 

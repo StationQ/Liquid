@@ -1,7 +1,10 @@
 ## Sample code from Dave Wecker
 
+Examples:
+* [AltOutput.fs](#ALTOUTPUT): QASM output example
+* [QLSA.fsx](#QLSA): Source code for the LIQ<i>Ui</i>|&#x232A; __QLSA() sample
 
-### AltOutput.fs
+### <a name="ALTOUTPUT"></a>AltOutput.fs
 
 I've had some requests on how to generate circuit output for other quantum lanaguages (like QASM). This file contains a complete example. If you add it to your project (ahead of `Main.fs`) you will have a new command line function `__DumpQASM()` that will output QASM source for a Teleport circuit and a QFT.
 
@@ -17,3 +20,27 @@ The sections of the sample are:
 	* Label gates are skipped (`g.Op = GateOp.String`). You could gather all these up and then output then to QASM in a seperate pass. Not needed for this simple example.
 	* `BitCon`: Binary controlled gates need to be parsed to find what they control so that we can pass the correct name to QASM. This is only a partial parse (it's possible to have cases that this code doesn't handle)... but in most cases this will be enough
 * At the bottom of dump, we count up the total number of qubits (`wires`) and use that to make a qubit list for QASM.
+
+### <a name="QLSA"></a>QLSA.fsx
+
+There's some interest in using the Quantum Linear Systems Algorithm (QLSA) code in a course and we'e been asked 
+to release the source code for this purpose. The routine is an implementation of [Harrow, Hassidim and Lloyd (HHL)](http://arxiv.org/abs/0811.3171). I can't release the exact code (since it contains implementations of unpublished research), 
+but I've written a "stripped down" version that does everything the example in LIQ<i>Ui</i>|&#x232A; (`__QLSA()`) does.
+
+Items to note:
+
+* Change the line `#r @"\Liquid\bin\Liquid1.dll"` to point to wherever your 
+LIQ<i>Ui</i>|&#x232A; install is so that IntelliSense in Visual Studio works (if you care).
+* `QLSA()` is the main routine for the example. You can invoke it with:
+	*  `\Liquid\bin\Liquid.exe /s QLSA.fsx QLSA()`
+* `QLSA.log` shows a sample run (copy of what Liquid.log will look like when you run)
+* After you run, you will have circuit drawings in `QLSA*.htm` (as well as `QLSA*.tex).
+* You will also have `Redund.htm` (and `Redund.tex`) which is the detailed circuit with 
+obvious redundancies removed.
+* The output contains lines that have the text `CSV` on them. If you gather these up and put them in a `.CSV` file, you can use Excel to analyze the data.
+* `QLSA.xlsx` is a sample Excel file created from `QLSA.log`
+	* Top left is the data exctracted from the log
+	* Top right is a Pivot Table that allows manipulation of the data (you can turn the filter for `Good` on and off)
+	* Bottom middle is a chart showing the data where we've filtered to show only converged (`Good`) results.
+* We try to converge at each value of r. If after 500 iterations we don't converge, we 
+give up at that value (hence the GOOD/BAD flag on the output).

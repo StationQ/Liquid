@@ -1,6 +1,10 @@
 # The Language-Integrated Quantum Operations (LIQ<i>Ui</i>|&#x232A;) simulator
 
 ## News
+__2016/04/23 QLSA soure code released__
+
+In UserCode\DaveWecker there's a new release of source code for the QLSA example that's built in to LIQ<i>Ui</i>|&#x232A;. See the [README.md](UserCode/DaveWecker/README.md) file in the same directory for details.
+
 __2016/03/11 New introduction videos__
 
 Seven new short videos have been posted to the [LIQ<i>Ui</i>|&#x232A; Research site](http://research.microsoft.com/en-us/projects/liquid/)

@@ -135,8 +135,8 @@
   <HelpKINode Title="Complex.Conj method" Url="html/19fe39df-b17b-8b00-3a83-9f4588056c22.htm" />
   <HelpKINode Title="Complex.Copy method" Url="html/9f94911c-85cf-2ba0-7854-8d79f5b9d722.htm" />
   <HelpKINode Title="Complex.Dump method" Url="html/e7594e80-7db2-d78f-a597-ab698fb9f53a.htm" />
-  <HelpKINode Title="Complex.I property" Url="html/8448fbad-8d12-f539-6d1a-b5b8915d26d0.htm" />
   <HelpKINode Title="Complex.i property" Url="html/d917c6d3-bb62-88b4-2b39-4a9d692ef3dc.htm" />
+  <HelpKINode Title="Complex.I property" Url="html/8448fbad-8d12-f539-6d1a-b5b8915d26d0.htm" />
   <HelpKINode Title="Complex.MCC property" Url="html/bba58d8f-050e-f7a2-3f5a-20c7b5648029.htm" />
   <HelpKINode Title="Complex.Multiply operator" Url="html/23180d75-898b-7d15-841e-9d0240f88748.htm" />
   <HelpKINode Title="Complex.Narrow method" Url="html/0e359d12-8764-22e2-45b9-3d6c4f9ba509.htm" />
@@ -159,8 +159,8 @@
     <HelpKINode Title="Spin.Copy Method " Url="html/0391d2be-c314-d15b-f7d8-e5396eba1af0.htm" />
   </HelpKINode>
   <HelpKINode Title="copyright property" Url="html/966ce531-169d-ac19-d449-049519fd9515.htm" />
-  <HelpKINode Title="count property" Url="html/a5d54801-ef17-0710-3a9c-9242690e26da.htm" />
   <HelpKINode Title="Count property" Url="html/1fb4b1c4-dd35-db6f-9b99-9645233401b6.htm" />
+  <HelpKINode Title="count property" Url="html/a5d54801-ef17-0710-3a9c-9242690e26da.htm" />
   <HelpKINode Title="CreMat method" Url="html/fbb07cf9-a571-480b-1c4d-6c4e38ef9dc8.htm" />
   <HelpKINode Title="CreZer method" Url="html/5630e9d7-4d6f-9404-63dc-ff9391fa5fd6.htm" />
   <HelpKINode Title="CRx method" Url="html/c5131064-57ef-4b68-6ce3-9244155caf3b.htm" />
@@ -184,6 +184,7 @@
   <HelpKINode Title="CSMat.DumpMCC method" Url="html/b17b05a2-708f-1c31-58c2-26d18c5d235b.htm" />
   <HelpKINode Title="CSMat.DumpML method" Url="html/41750a72-855b-be1d-4b64-2c10db2902f9.htm" />
   <HelpKINode Title="CSMat.Equals method" Url="html/d13f0933-e684-6e52-4a98-5316881d05b3.htm" />
+  <HelpKINode Title="CSMat.Filled method" Url="html/1dd1750b-d6db-1a34-92be-d9f56ec9ebd9.htm" />
   <HelpKINode Title="CSMat.Item property" Url="html/72715da5-1f89-b601-0047-390e0bdda6c8.htm" />
   <HelpKINode Title="CSMat.Kron method" Url="html/31dd4def-5d71-afd7-c6c9-fd4155fdef8b.htm" />
   <HelpKINode Title="CSMat.Length property" Url="html/7284a1d0-7a21-6349-1ebc-0d9cf848c4f9.htm" />
@@ -217,6 +218,7 @@
   <HelpKINode Title="CVec.Kron method" Url="html/92a43eac-a201-3c92-66af-eed3ed187083.htm" />
   <HelpKINode Title="CVec.Length property" Url="html/ed686628-605a-2388-739f-d0b477ff92c0.htm" />
   <HelpKINode Title="CVec.MultiplyBang operator" Url="html/6f8e1240-4dc2-fec0-b5f4-4f14860a7735.htm" />
+  <HelpKINode Title="CVec.NonZeros method" Url="html/88b2325a-560a-100b-b836-9af52dce9167.htm" />
   <HelpKINode Title="CVec.Normalize method" Url="html/f642b691-d9a5-e2ad-972b-a9a7852f1362.htm" />
   <HelpKINode Title="CVec.Read method" Url="html/ad4f37b6-233e-0ce5-1968-903a851e07d2.htm" />
   <HelpKINode Title="CVec.rSafe property" Url="html/676947d2-367d-14e0-69be-4d5ed2faf3a3.htm" />
@@ -312,6 +314,7 @@
   <HelpKINode Title="Fermion.tTotal property" Url="html/4c9b6a9f-c13d-0a76-8270-b2432e7b3e1d.htm" />
   <HelpKINode Title="Fermion.Ua property" Url="html/2eccdbc0-3056-3c3c-17e2-e6b0234c01d6.htm" />
   <HelpKINode Title="Ferro method" Url="html/e8b167d9-8b4a-07bf-4b4a-c8d8505bdd81.htm" />
+  <HelpKINode Title="Filled method" Url="html/1dd1750b-d6db-1a34-92be-d9f56ec9ebd9.htm" />
   <HelpKINode Title="FindIds method" Url="html/cb59bcd7-1472-cdc6-cc41-6ce36b27d89b.htm" />
   <HelpKINode Title="FixUnitary method" Url="html/ee357967-a3fd-e090-e097-2fe0ffc439f5.htm" />
   <HelpKINode Title="Fold method" Url="html/1e2bd177-d7aa-d609-f506-1d6af21e8829.htm" />
@@ -428,11 +431,12 @@
   <HelpKINode Title="HamiltonianGates.ZZR method" Url="html/66ccb69b-ce6a-75a1-2e7c-b628000c32f5.htm" />
   <HelpKINode Title="Help property" Url="html/1a419642-2cf7-6e3b-5a43-2c1c8affdada.htm" />
   <HelpKINode Title="I method" Url="html/baa55539-dba2-71ca-6ea3-71d550c46b2c.htm" />
-  <HelpKINode Title="i property" Url="html/d917c6d3-bb62-88b4-2b39-4a9d692ef3dc.htm" />
   <HelpKINode Title="I property" Url="html/8448fbad-8d12-f539-6d1a-b5b8915d26d0.htm" />
+  <HelpKINode Title="i property" Url="html/d917c6d3-bb62-88b4-2b39-4a9d692ef3dc.htm" />
   <HelpKINode Title="Id property" Url="html/b9e58d73-b983-88c2-fd1f-d8364b4051fa.htm" />
   <HelpKINode Title="Idle property" Url="html/54493482-287f-d156-04c9-f0025e7da081.htm" />
   <HelpKINode Title="Inject method" Url="html/c450b01f-3740-00db-ab82-adb32efd90fe.htm" />
+  <HelpKINode Title="interactive property" Url="html/8bcedab4-1561-489d-fb9c-e784a4d7eb70.htm" />
   <HelpKINode Title="iSafe property" Url="html/4e03febb-f29e-dff6-54ef-2684555d0e28.htm" />
   <HelpKINode Title="Item property">
     <HelpKINode Title="CMat.Item Property " Url="html/523a78d9-12cf-e338-dc7b-9566b0465b8a.htm" />
@@ -443,6 +447,7 @@
   <HelpKINode Title="JM method" Url="html/417c2464-9243-cb70-1318-f5adbb4cbf04.htm" />
   <HelpKINode Title="JMx method" Url="html/9e02cb8a-585a-742a-2970-2906cb3f2ce3.htm" />
   <HelpKINode Title="JMz method" Url="html/f8f1084d-718e-896b-1bcb-21860838f44c.htm" />
+  <HelpKINode Title="Join method" Url="html/a378effd-a57d-5bbc-bec8-f798868cd25f.htm" />
   <HelpKINode Title="Ket class">
     <HelpKINode Title="Ket Class" Url="html/aecdd029-bf0a-3e8f-3c2b-348802584d85.htm" />
     <HelpKINode Title="about Ket class" Url="html/aecdd029-bf0a-3e8f-3c2b-348802584d85.htm" />
@@ -463,6 +468,7 @@
   <HelpKINode Title="Ket.DumpKP method" Url="html/40503103-872d-6517-b3a9-61275fd89a15.htm" />
   <HelpKINode Title="Ket.Entropy method" Url="html/4b4eb681-4588-6a7a-af13-36046b62b490.htm" />
   <HelpKINode Title="Ket.Item property" Url="html/936deafa-244d-ee54-4011-ae2335ca2aca.htm" />
+  <HelpKINode Title="Ket.Join method" Url="html/a378effd-a57d-5bbc-bec8-f798868cd25f.htm" />
   <HelpKINode Title="Ket.Ket constructor" Url="html/8012d866-6977-b33e-9a37-fe2724ae6501.htm" />
   <HelpKINode Title="Ket.MaxEntangled property" Url="html/af1553ab-f44c-eea9-adf3-c1132fe9f65c.htm" />
   <HelpKINode Title="Ket.NormDiff method" Url="html/edb6eb09-1885-ca78-b6cc-56bf2ae7447e.htm" />
@@ -640,6 +646,7 @@
   </HelpKINode>
   <HelpKINode Title="NoisyMats.GenRot method" Url="html/7d8aac60-8ee0-c5c3-26ea-07d5fee61318.htm" />
   <HelpKINode Title="NoNoise property" Url="html/79955f04-8f17-1fd5-6937-91bca97fc5bb.htm" />
+  <HelpKINode Title="NonZeros method" Url="html/88b2325a-560a-100b-b836-9af52dce9167.htm" />
   <HelpKINode Title="Normal method" Url="html/41aafa2e-870a-6733-66ee-4086c0323d52.htm" />
   <HelpKINode Title="Normalize method" Url="html/f642b691-d9a5-e2ad-972b-a9a7852f1362.htm" />
   <HelpKINode Title="NormDiff method" Url="html/edb6eb09-1885-ca78-b6cc-56bf2ae7447e.htm" />
@@ -993,6 +1000,7 @@
   <HelpKINode Title="Util.getIntPar method" Url="html/97307da3-2d75-1376-7395-088f2d2458d4.htm" />
   <HelpKINode Title="Util.getIntsPar method" Url="html/aafad556-bda8-4c60-815c-e974028af96c.htm" />
   <HelpKINode Title="Util.getStrPar method" Url="html/fc5d9465-af27-0d4e-4503-8dc01a45bf56.htm" />
+  <HelpKINode Title="Util.interactive property" Url="html/8bcedab4-1561-489d-fb9c-e784a4d7eb70.htm" />
   <HelpKINode Title="Util.LQDAttribute class">
     <HelpKINode Title="Util.LQDAttribute Class" Url="html/fca726c4-571d-d756-6352-1f7ff62a6ce6.htm" />
     <HelpKINode Title="about Util.LQDAttribute class" Url="html/fca726c4-571d-d756-6352-1f7ff62a6ce6.htm" />

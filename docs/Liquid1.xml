@@ -721,6 +721,12 @@
       <returns>true if the matrices are equal, within the tolerance limit, or 
  false otherwise.</returns>
     </member>
+    <member name="M:Microsoft.Research.Liquid.CSMat.Filled">
+      <summary>
+ Return indicies of filled entries in the sparse matrix (may include zeros)
+ </summary>
+      <returns>Sequence of x,y tuples to access matrix with</returns>
+    </member>
     <member name="P:Microsoft.Research.Liquid.CSMat.Item(System.Int32,System.Int32)">
       <summary>
  Gets an element of the matrix.
@@ -923,6 +929,14 @@
       <summary>
  The length of this vector
  </summary>
+    </member>
+    <member name="M:Microsoft.Research.Liquid.CVec.NonZeros(System.Int32,Microsoft.FSharp.Core.FSharpOption{System.Double})">
+      <summary>
+ Gets non-zero indices upto a max count
+ </summary>
+      <param name="mx">Max length of list to return</param>
+      <param name="thresh">Threshold (optional=tol*1.0e+2)</param>
+      <returns>Indicies of non-zero (tolerance defined) entries</returns>
     </member>
     <member name="M:Microsoft.Research.Liquid.CVec.Normalize(Microsoft.FSharp.Core.FSharpOption{System.Double})">
       <summary>
@@ -1873,6 +1887,13 @@
       <summary>
  Get a specific qubit in our state (by qubit ID)
 </summary>
+    </member>
+    <member name="M:Microsoft.Research.Liquid.Ket.Join(Microsoft.Research.Liquid.Ket)">
+      <summary>
+ Joins another Ket to the end of this one (added Ket is NOT usable after this)
+ </summary>
+      <param name="kAdd">ket to add at the end</param>
+      <returns>Resulting ket</returns>
     </member>
     <member name="P:Microsoft.Research.Liquid.Ket.MaxEntangled">
       <summary>
@@ -3358,6 +3379,16 @@
       <param name="nam">The macro name</param>
       <param name="def">The default value to return if the name is not found in the dictionary</param>
       <returns>Macro value if found, or else default value</returns>
+    </member>
+    <member name="P:Microsoft.Research.Liquid.Util.interactive">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:Microsoft.Research.Liquid.Util.interactive</parameter>
+          </include>
+        </markup>
+      </summary>
     </member>
     <member name="P:Microsoft.Research.Liquid.Util.outputPrefix">
       <summary>

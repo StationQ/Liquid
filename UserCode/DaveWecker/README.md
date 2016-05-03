@@ -3,6 +3,7 @@
 Examples:
 * [AltOutput.fs](#ALTOUTPUT): QASM output example
 * [QLSA.fsx](#QLSA): Source code for the LIQ<i>Ui</i>|&#x232A; __QLSA() sample
+* [QuAM.fsx](#QuAM) : Source code for the LIQ<i>Ui</i>|&#x232A; __QuAM() sample
 
 ### <a name="ALTOUTPUT"></a>AltOutput.fs
 
@@ -44,3 +45,22 @@ obvious redundancies removed.
 	* Bottom middle is a chart showing the data where we've filtered to show only converged (`Good`) results.
 * We try to converge at each value of r. If after 500 iterations we don't converge, we 
 give up at that value (hence the GOOD/BAD flag on the output).
+
+### <a name="QuAM"></a>QuAM.fsx
+
+We've had a request to make the source for the Quantum Associative Memory implementation available. It turns
+out that the required some work to expose a few of new APIs in the system (updates will be put in the
+reference manual). Functionally, the provided example is idential to the one that's built into the simulator
+and should give a good idea of how to implement other simliar applications.
+
+See the paper by [Ventura and Martinez](http://arxiv.org/abs/quant-ph/9807053) for details of the approach.
+
+You can compile and run the sample with: `\Liquid\bin\Liquid.exe /s QuAM.fsx QuAM()`
+
+The new APIs are:
+
+* `CSMat.Filled()` which returns a sequence of indices of filled entries in a sparse matrix.
+* `CVec.NonZeros()` which returns all non-zero entries in a state vector that are above a specified threshold. This routine is already used by the `Dump()` 
+function and was made public for general use.
+* `Ket.Join()` allows two ket vectors (registers) to be joined together. There are other ways around this, but when I re-wrote the `QLSA()` example
+I decided it would be good to expose this internal routine (since `Ket.Split()` is already exposed).

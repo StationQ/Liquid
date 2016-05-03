@@ -686,6 +686,12 @@
  <param name="x">Row index to search for</param>
  <returns>Sparse index or 0 if we can't find it</returns>
 </member>
+<member name="M:Microsoft.Research.Liquid.CSMat.Filled">
+ <summary>
+ Return indicies of filled entries in the sparse matrix (may include zeros)
+ </summary>
+ <returns>Sequence of x,y tuples to access matrix with</returns>
+</member>
 <member name="M:Microsoft.Research.Liquid.CSMat.Expand(Microsoft.FSharp.Collections.FSharpList{System.Int32})">
  <summary>
  Build an operator to work on more bits mapping items to new index.

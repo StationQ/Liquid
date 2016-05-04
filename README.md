@@ -1,11 +1,11 @@
 # The Language-Integrated Quantum Operations (LIQ<i>Ui</i>|&#x232A;) simulator
 
 ## News
-__2016/05/03 QuAM soure code released__
+__2016/05/03 QuAM source code released__
 
 In UserCode\DaveWecker there's a new release of source code for the QuAM example that's built in to LIQ<i>Ui</i>|&#x232A;. See the [README.md](UserCode/DaveWecker/README.md) file in the same directory for details. We also exposed a few more APIs to help make this and other examples easier to code.
 
-__2016/04/23 QLSA soure code released__
+__2016/04/23 QLSA source code released__
 
 In UserCode\DaveWecker there's a new release of source code for the QLSA example that's built in to LIQ<i>Ui</i>|&#x232A;. See the [README.md](UserCode/DaveWecker/README.md) file in the same directory for details.
 

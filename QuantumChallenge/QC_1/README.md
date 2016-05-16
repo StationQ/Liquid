@@ -10,6 +10,8 @@ Submissions were judged based on their originality, depth of use of LIQ<i>Ui</i>
 
 ### [Simulating Dynamical Input-Output Quantum Systems with LIQ<i>Ui</i>|&#x232A;](/QuantumChallenge/QC_1/Simulating_Dynamical_Input-Output_Quantum_Systems.pdf)
 
+_Author: Thien Nguyen, Australian National University_
+
 The author demonstrates how a quantum computer can be used to simulate open quantum systems. He applies this to an investigation of a mechanism for building a quantum memory: Controlled Reversible Inhomogeneous Broadening (CRIB). This is applicable to many quantum hardware approaches, including NV centers and quantum dots. Dissipation, which is what distinguishes open quantum systems, is emulated using an innovative gadget based on amplitude-damping noise. The paper provides a readable introduction to the physics involved in open quantum systems and CRIB, as well as a nice overview of the LIQ<i>Ui</i>|&#x232A; simulation.
 
 ## Second Prizes

@@ -45,7 +45,7 @@ Sending mail to liquid(at)microsoft.com will get the attention of the entire tea
 We currently do not have a Twitter account set up specifically for LIQ&#x1D448;&#x1D456;&#x23D0;&#x232A;, however if you tag a post with #QuArC (or flag @DaveWecker), I promise to read it ;)
 
 # News
-__2016/16/03 First Quantum Challenge Winners announced!__
+__2016/06/16 First Quantum Challenge Winners announced!__
 
 The winners of the first Quantum Challenge have been announced in the [Microsoft Research Blog](https://blogs.msdn.microsoft.com/msr_er/2016/05/16/microsoft-quantum-challenge-results-are-in/).
 Full information about the entries may be found in our [GitHub repo](https://github.com/StationQ/Liquid/tree/master/QuantumChallenge/QC_1).

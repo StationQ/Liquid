@@ -75,6 +75,27 @@ footer > .inner-footer a:hover {
   background-color: #401973;
   text-decoration: none;
 }
+.btn-hero-core2 {
+  padding: 15px 25px;
+  background-color: gold;
+  /*color: #d89ae4;*/
+  color: black;
+  display: inline-block;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 20px;
+  -webkit-box-shadow: 0px 4px 0px 0px #230E40;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    0px 4px 0px 0px #230E40;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         0px 4px 0px 0px #230E40;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  border-radius: 10px;
+}
+.btn-hero-core2:hover {
+  /* color: #d89ae4;*/
+  color: black;
+  background-color: yellow;
+  text-decoration: none;
+}
 .hero {
   background-color: #682079;
   width: inherit;

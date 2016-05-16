@@ -1,7 +1,7 @@
 # The Language-Integrated Quantum Operations (LIQ<i>Ui</i>|&#x232A;) simulator
 
 ## News
-__2016/16/03 First Quantum Challenge Winners announced!__
+__2016/06/16 First Quantum Challenge Winners announced!__
 
 The winners of the first Quantum Challenge have been announced in the [Microsoft Research Blog](https://blogs.msdn.microsoft.com/msr_er/2016/05/16/microsoft-quantum-challenge-results-are-in/).
 Full information about the entries may be found in our [GitHub repo](https://github.com/StationQ/Liquid/tree/master/QuantumChallenge/QC_1).

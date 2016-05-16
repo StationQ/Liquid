@@ -32,13 +32,13 @@ The author developed an F# library that implements a quantum neural network, inc
 
 ### [Solving maximally-constrained 1-SAT problems with oracular access](/QuantumChallenge/QC_1/Solving_Maximally-Constrained_1-SAT_Problems.pdf)
 
-_Authors: Vojtech Havlcek, ETH Zurich; Antony Milne and Andrew Simmons, Imperial College London_
+_Authors: Vojtěch Havlíček, ETH Zurich; Antony Milne and Andrew Simmons, Imperial College London_
 
 The authors demonstrate how the family of maximally constrained 1-SAT problems displays a striking separation between classical and quantum query complexity with oracular access. They optimize the qubit usage of existing quantum algorithms, implement their scheme fully using LIQ<i>Ui</i>|&#x232A;, and investigate the scaling of the computational resources required. Renderings from LIQ<i>Ui</i>|&#x232A; are integrated along with simulation results and backing theory to present their case.
 
 ### [Testing quantum state engineering protocols via LIQ<i>Ui</i>|&#x232A; simulations](/QuantumChallenge/QC_1/Testing_Quantum_State_Engineering_Protocols.pdf)
 
-_Author: Andras Gilyen, Centrum Wiskunde & Informatica_
+_Author: Andras Pal Gilyen, Centrum Wiskunde & Informatica_
 
 The author demonstrates some unusual state preparation protocols using post selection. Post selection in quantum algorithms is a critical element of the quantum toolbox, allowing non-unitary operations to be implemented. The first protocol is used to generate the Mandelbrot set using a quantum circuit. Some beautiful visualizations are included. The second protocol implements the quantum Moser-Tardos algorithm to prepare the ground state of a frustration-free Hamiltonian. The author uses the second protocol to test the scaling of the algorithm in the presence of non-commutating Hamiltonian terms.
 

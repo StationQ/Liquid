@@ -45,7 +45,19 @@ Sending mail to liquid(at)microsoft.com will get the attention of the entire tea
 We currently do not have a Twitter account set up specifically for LIQ&#x1D448;&#x1D456;&#x23D0;&#x232A;, however if you tag a post with #QuArC (or flag @DaveWecker), I promise to read it ;)
 
 # News
-__2016/06/16 First Quantum Challenge Winners announced!__
+__2016/05/20 Channels/POVMs added to LIQ<i>Ui</i>|&#x232A;__
+
+We've made a major addition to the available noise models in the system by adding Channels (via Kraus operators) and Generalized Measurement (via POVMs). The Users Manual has a new
+section under "Advanced Noise Models" called "Channels and POVMs", the API docs have been updated and there's a new built in example called `__Kraus`. A sample call would be: 
+`__Kraus(1000,0.02,.02,true)` which would do 1000 runs with Amplitude Damping and Depolarizing noise. See the Users Manual for full details as well as the provided source code in `Samples\Kraus.fsx`.
+You can also find an example of a simple quantum game (Peres) using POVMs in the `UserCode\MartinRoettler` directory.
+
+__2016/05/16 First Quantum Challenge Winners announced!__
+
+The winners of the first Quantum Challenge have been announced in the [Microsoft Research Blog](https://blogs.msdn.microsoft.com/msr_er/2016/05/16/microsoft-quantum-challenge-results-are-in/).
+Full information about the entries may be found in our [GitHub repo](https://github.com/StationQ/Liquid/tree/master/QuantumChallenge/QC_1).
+
+__2016/05/16 First Quantum Challenge Winners announced!__
 
 The winners of the first Quantum Challenge have been announced in the [Microsoft Research Blog](https://blogs.msdn.microsoft.com/msr_er/2016/05/16/microsoft-quantum-challenge-results-are-in/).
 Full information about the entries may be found in our [GitHub repo](https://github.com/StationQ/Liquid/tree/master/QuantumChallenge/QC_1).

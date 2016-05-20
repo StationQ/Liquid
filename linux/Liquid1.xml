@@ -2164,7 +2164,13 @@
 <member name="P:Microsoft.Research.Liquid.Gate.Mat">
  <summary>
  The unitary matrix for this gate.
- If the gate is not defined by a unitary, this will be a 0x0 matrix.
+ If the gate is not defined by a single unitary, this will be a 0x0 matrix.
+ </summary>
+</member>
+<member name="P:Microsoft.Research.Liquid.Gate.Kraus">
+ <summary>
+ The Kraus operator matrix list for this gate (if op type is Channel).
+ If the gate is not a channel, this will be an empty list.
  </summary>
 </member>
 <member name="P:Microsoft.Research.Liquid.Gate.Help">
@@ -2190,9 +2196,9 @@
  </summary>
 </member>
 <member name="P:Microsoft.Research.Liquid.Gate.Arity">
- <summary>
- The arity of the gate.
- </summary>
+<summary>
+ Get arity of the gate (based on Qubits or Mat/Kraus size).
+</summary>
 </member>
 <member name="M:Microsoft.Research.Liquid.Gate.ToString">
  <summary>
@@ -2248,6 +2254,16 @@
  </summary>
  <param name="qs">The Qubits for this gate to operate on.
  They are also used to identify the current Ket.</param>
+</member>
+<member name="M:Microsoft.Research.Liquid.Gate.OptimizeKraus(Microsoft.FSharp.Core.FSharpOption{Microsoft.Research.Liquid.Gate},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.String})">
+ <summary>
+ Optimze a Channel gate with Kraus operators (checks correctness and orders by magnitude)
+ </summary>
+ <param name="g2">Gate to append to make more complex channels (optional=None)</param>
+ <param name="name">New name for the gate (optional=K####)</param>
+ <param name="idMult">If appending, how much to multiply the parent gate IDs by (optional=count of appended)</param>
+ <param name="povm">Tag to use as POVM symbol for the new gate (optional="POVM")</param>
+ <returns>New Gate Function</returns>
 </member>
 <member name="M:Microsoft.Research.Liquid.Gate.NewMat(Microsoft.Research.Liquid.CSMat)">
  <summary>
@@ -2347,7 +2363,7 @@
  qubit added, followed by an underscore, '_', and then the name of the base gate.</param>
  <returns>The new controlled gate</returns>
 </member>
-<member name="M:Microsoft.Research.Liquid.Gate.#ctor(Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{Microsoft.Research.Liquid.CSMat},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{Microsoft.Research.Liquid.GateOp},Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Core.FSharpOption{Microsoft.Research.Liquid.Gate}},Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Core.FSharpOption{System.Object}})">
+<member name="M:Microsoft.Research.Liquid.Gate.#ctor(Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{Microsoft.Research.Liquid.CSMat},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{Microsoft.Research.Liquid.GateOp},Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Core.FSharpOption{Microsoft.Research.Liquid.Gate}},Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Core.FSharpOption{System.Object}},Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.KrausOp}})">
  <summary>
  Creates a new gate from scratch.
  </summary>
@@ -2372,6 +2388,7 @@
  <param name="Parent">The optional parent gate, if required by the gate operation type.
  The default is None.</param>
  <param name="User">An optional user-defined field.</param>
+ <param name="Kraus">An optional list of Kraus tags and matrices for Channels.</param>
 </member>
 <member name="T:Microsoft.Research.Liquid.Gate">
  <summary>
@@ -2394,6 +2411,7 @@
  <ul>
  <li><b>Normal</b>: Implements a unitary operation and is defined by a matrix.</li>
  <li><b>Measure</b>: Measures a single qubit or the joint parity of a groupt of qubits.</li>
+ <li><b>Channel(sym)</b>: Selects a Kraus operator to run (sym is a symbol to store the selected index for POVMs)</li>
  <li><b>Reset(b)</b>: Reanimates a measured qubit to the Bit value b. If b is Unknown, then the
  qubit is reanimated to its last measured value.</li>
  <li><b>String</b>: Puts a label in a diagram</li>
@@ -2937,6 +2955,14 @@
  <param name="qsIn">First qubit in list is the one measured</param>
  <param name="force">Force a measurement value (optional=Unknown)</param>
 </member>
+<member name="M:Microsoft.Research.Liquid.Ket.Kraus(Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.KrausOp},Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.Qubit},Microsoft.FSharp.Core.FSharpOption{System.String})">
+ <summary>
+ Apply Kraus operators for a channel
+ </summary>
+ <param name="kraus">List of Kraus matrices</param>
+ <param name="qs">Qubits to operate on</param>
+ <param name="name">Optional name for POVM index store (default="")</param>
+</member>
 <member name="M:Microsoft.Research.Liquid.Ket.KetPart(Microsoft.Research.Liquid.Qubit)">
  <summary>
  Get the KetPart the contains this qubit (used internally)
@@ -3179,6 +3205,21 @@
  <li>qs: Qubits that make up this section of the state</li>
  <li>v: Complex Vector that goes with the qubits</li>
  </ul>
+ </summary>
+</member>
+<member name="P:Microsoft.Research.Liquid.KrausOp.mat">
+<summary>
+ Kraus operator matrix
+</summary>
+</member>
+<member name="P:Microsoft.Research.Liquid.KrausOp.tag">
+<summary>
+ Name to use for POVM application (usually a user provided index)
+</summary>
+</member>
+<member name="T:Microsoft.Research.Liquid.KrausOp">
+ <summary>
+ Entries for Kraus operators in Channel Gate type
  </summary>
 </member>
 <member name="T:Microsoft.Research.Liquid.LQDent">
@@ -5036,6 +5077,20 @@
  <param name="b">The initial state of the reset qubit, either Zero or One.</param>
  <param name="qs">A list of qubits; the head of the list is reset.</param>
 </member>
+<member name="M:Microsoft.Research.Liquid.Operations.DP(System.Double,Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.Qubit})">
+ <summary>
+ Depolarizing channel using four Kraus operators (always put the most probable one first)
+ </summary>
+ <param name="prob">Probability of depolarizing in X,Y or Z</param>
+ <param name="qs">The list of qubits that the Kraus operators touch</param>
+</member>
+<member name="M:Microsoft.Research.Liquid.Operations.AD(System.Double,Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.Qubit})">
+ <summary>
+ Amplitude Damping Channel using two Kraus operators (always put the most probable one first)
+ </summary>
+ <param name="prob">Probability of damping</param>
+ <param name="qs">The list of qubits that the Kraus operators touch</param>
+</member>
 <member name="M:Microsoft.Research.Liquid.Operations.JM(System.String,System.String,Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.Qubit})">
  <summary>
  Performs a joint parity measurement in the given basis on a list of qubits.
@@ -5842,6 +5897,15 @@
  </summary>
  <param name="mol">The name of the molecule to simulate.
  Entering an empty string, "", will display the list of available molecules.</param>
+</member>
+<member name="M:Microsoft.Research.Liquid.Tests.__Kraus(System.Int32,System.Double,System.Double,System.Boolean)">
+ <summary>
+ Show how to add noise to Teleport with Kraus operators
+ </summary>
+ <param name="nRuns">How many runs to gather statistics over</param>
+ <param name="probAD">Probability of Amplitude Damping on any single qubit</param>
+ <param name="probDP">Probability of Depolarizing noise on any single qubit</param>
+ <param name="verbose">Output detailed stats and drawings</param>
 </member>
 <member name="M:Microsoft.Research.Liquid.Tests.__NoiseAmp">
  <summary>

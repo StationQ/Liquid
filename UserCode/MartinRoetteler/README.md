@@ -17,6 +17,8 @@ See also the book [3, p.287] by Peres for a nice description of the optimal POVM
 You can compile and run the sample with: `\Liquid\bin\Liquid.exe /s Peres.fsx Peres(100)`
 
 [1] A. Holevo, “Information-theoretical aspects of quantum measurement,” Problems of Information Transmission, vol. 9, no. 2, pp. 110–118 (1973)
+
 [2] A. Peres and W. K. Wootters, “Optimal detection of quantum information,” Phys. Rev. Lett.,
 vol. 66, pp. 1119-1122, Mar. 1991.
+
 [3] A. Peres, “Quantum Theory: Concepts and Methods,” Kluwer Academic Publishers, 2002. 

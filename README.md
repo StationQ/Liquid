@@ -111,7 +111,7 @@ see the [Using LIQ<i>Ui</i>|&#x232A; on Microsoft Azure](AzureGuide.md) page for
 ## How Do I Use It?
 
 See the [users' guide](http://stationq.github.io/Liquid/docs/LIQUiD.pdf) and the [full help documentation](http://stationq.github.io/Liquid/docs/index.html).
-The help may also be downloaded as a [single file](https://github.com/StationQ/Liquid/blob/master/docs/Liquid.chm), if desired. There is also a [tutorial video](http://research.microsoft.com/apps/video/default.aspx?id=258279) available that will take you through the basics.
+The help may also be downloaded as a [single file](http://stationq.github.io/Liquid/docs/Liquid.chm), if desired. There is also a [tutorial video](http://research.microsoft.com/apps/video/default.aspx?id=258279) available that will take you through the basics.
 
 We've also posted seven short videos to the [LIQ<i>Ui</i>|&#x232A; Research site](http://research.microsoft.com/en-us/projects/liquid/). These include:
 * [Station Q Overview](http://research.microsoft.com/apps/video/default.aspx?id=263557)

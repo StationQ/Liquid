@@ -27,7 +27,7 @@ Seven new short videos have been posted to the [LIQ<i>Ui</i>\|&#x232A; Research 
 
 __2016/03/04 Outputting circuits for other Quantum Languages__
 
-We've uploaded sample code that shows how to print out circuits for other quantum languages. This specific example shows how to parse a circuit and generate QASM code. See [UserCode example](https://github.com/msr-quarc/Liquid/tree/master/UserCode/DaveWecker) from DaveWecker
+We've uploaded sample code that shows how to print out circuits for other quantum languages. This specific example shows how to parse a circuit and generate QASM code. See [UserCode example](https://github.com/StationQ/Liquid/tree/master/UserCode/DaveWecker) from DaveWecker
 
 
 As always, we encourage you to join our (low volume) mailing list (instructions below) so you will directly receive announcements like these.
@@ -110,8 +110,8 @@ see the [Using LIQ<i>Ui</i>|&#x232A; on Microsoft Azure](AzureGuide.md) page for
 
 ## How Do I Use It?
 
-See the [users' guide](https://msr-quarc.github.io/Liquid/LIQUiD.pdf) and the [full help documentation](https://msr-quarc.github.io/Liquid/).
-The help may also be downloaded as a [single file](https://msr-quarc.github.io/Liquid/Liquid.chm), if desired. There is also a [tutorial video](http://research.microsoft.com/apps/video/default.aspx?id=258279) available that will take you through the basics.
+See the [users' guide](http://stationq.github.io/Liquid/docs/LIQUiD.pdf) and the [full help documentation](http://stationq.github.io/Liquid/docs/index.html).
+The help may also be downloaded as a [single file](https://github.com/StationQ/Liquid/blob/master/docs/Liquid.chm), if desired. There is also a [tutorial video](http://research.microsoft.com/apps/video/default.aspx?id=258279) available that will take you through the basics.
 
 We've also posted seven short videos to the [LIQ<i>Ui</i>|&#x232A; Research site](http://research.microsoft.com/en-us/projects/liquid/). These include:
 * [Station Q Overview](http://research.microsoft.com/apps/video/default.aspx?id=263557)
@@ -124,5 +124,5 @@ We've also posted seven short videos to the [LIQ<i>Ui</i>|&#x232A; Research site
 
 Note that this version of LIQ<i>Ui</i>|&#x232A; is limited to a maximum of 23 physical qubits for full state vector simulation.
 
-If you run into a problem or have a question, you can [post an issue](https://github.com/msr-quarc/Liquid/issues).
+If you run into a problem or have a question, you can [post an issue](https://github.com/StationQ/Liquid/issues).
 If you have other feedback, you can contact the LIQ<i>Ui</i>|&#x232A; team at liquid@microsoft.com.

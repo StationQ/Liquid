@@ -5,7 +5,7 @@ __2016/07/02 Sample implementation of Spin.Test and Stabilizer.ShowState release
 
 In UserCode\DaveWecker there are two new releases of sample implementations. The first shows how to implement the Spin.Test routine that's caled by the `__Ferro()` example in LIQ<i>Ui</i>\|&#x232A;. There's also a new property on stabilizers called `Tableau` which will return the current (raw) stabilizers. See the `Tableau.fsx` sample in the same directory for further information. The [README.md](UserCode/DaveWecker/README.md) file is a good place to start.
 
-__2016/05/20 Channels/POVMs added to LIQ<i>Ui</i>|&#x232A;__
+__2016/05/20 Channels/POVMs added__
 
 We've made a major addition to the available noise models in the system by adding Channels (via Kraus operators) and Generalized Measurement (via POVMs). The Users Manual has a new
 section under "Advanced Noise Models" called "Channels and POVMs", the API docs have been updated and there's a new built in example called `__Kraus`. A sample call would be: 

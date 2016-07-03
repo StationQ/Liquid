@@ -2,9 +2,10 @@
 
 Examples:
 * [AltOutput.fs](#ALTOUTPUT): QASM output example
-* [QLSA.fsx](#QLSA): Source code for the LIQ<i>Ui</i>|&#x232A; __QLSA() sample
-* [QuAM.fsx](#QuAM) : Source code for the LIQ<i>Ui</i>|&#x232A; __QuAM() sample
-* [SpinTest.fsx](#SpinTest) : Sample source code for the LIQ<i>Ui</i>|&#x232A; __Ferro() sample
+* [QLSA.fsx](#QLSA): Source code for the LIQ<i>Ui</i>|&#x232A; `__QLSA()` sample
+* [QuAM.fsx](#QuAM) : Source code for the LIQ<i>Ui</i>|&#x232A; `__QuAM()` sample
+* [SpinTest.fsx](#SpinTest) : Sample source code for the LIQ<i>Ui</i>|&#x232A; `__Ferro()` sample
+* [Tableau.fsx](#Tableau) : Sample LIQ<i>Ui</i>|&#x232A; stabilizer `ShowState()` implementation using the new `Tableau` property
 
 ### <a name="ALTOUTPUT"></a>AltOutput.fs
 
@@ -71,3 +72,20 @@ I decided it would be good to expose this internal routine (since `Ket.Split()` 
 We've had a couple of requests to see an example of how Spin.Test() is implemented. This file contains a complete stand-alone version (simply called `Test()`) that is called from the command line with `Ferro()`. This will run one of the built-in examples (`__Ferro()`) with a frustrated ferromagnetic chain (one end up and the other down). 
 
 You can compile and run the sample with: `\Liquid\bin\Liquid.exe /s SpinTest.fsx Ferro()`
+
+### <a name="Tableau"></a>Tableau.fsx
+
+We've been told that people would like to access the internal state of the Stabilizer simulator. Tableau is a new property that will return a tuple of n,rs,xs,zs:
+
+* n             : Number of qubits represented
+* rs[2*n+1]     : 0=+1 1=+i 2=-1 3=-i
+* xs[2*n+1,ints]: X stablizer values
+* zs[2*n+1,ints]: Z stablizer values
+
+ints is the number of ints used to represent the bits (`(n >>> 5) + 1`)
+
+`Tableau.fsx` has a complete implementation of `ShowState` and is demonstrated dumping the tableau for Teleport.
+
+Note: I have _not_ added the Tableau API to the docs (for now). This is a very specialized call and (I believe) it isn't of great use to most users.
+
+You can compile and run the sample with: `\Liquid\bin\Liquid.exe /s Tableau.fsx Tableau()`

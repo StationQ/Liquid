@@ -4204,6 +4204,17 @@
  A single term in a Spin Hamiltonian.
  </summary>
 </member>
+<member name="P:Microsoft.Research.Liquid.Stabilizer.Tableau">
+ <summary>
+ Get the internal data in the tableau:
+   n             : Number of qubits represented
+   ints          : number of ints used to represent the bits = (n >>> 5) + 1
+   rs[2*n+1]     : 0=+1 1=+i 2=-1 3=-i
+   xs[2*n+1,ints]: X stablizer values
+   zs[2*n+1,ints]: X stablizer values
+ </summary>
+ <returns>A tuple: n,rs,xs,zs</returns>
+</member>
 <member name="P:Microsoft.Research.Liquid.Stabilizer.Item(System.Int32)">
  <summary>
  The current measured value for a qubit.

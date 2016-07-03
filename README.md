@@ -1,6 +1,10 @@
 # The Language-Integrated Quantum Operations (LIQ<i>Ui</i>|&#x232A;) simulator
 
 ## News
+__2016/07/02 Sample implementation of Spin.Test and Stabilizer.ShowState released__
+
+In UserCode\DaveWecker there are two new releases of sample implementations. The first shows how to implement the Spin.Test routine that's caled by the `__Ferro()` example in LIQ<i>Ui</i>\|&#x232A;. There's also a new property on stabilizers called `Tableau` which will return the current (raw) stabilizers. See the `Tableau.fsx` sample in the same directory for further information. The [README.md](UserCode/DaveWecker/README.md) file is a good place to start.
+
 __2016/05/20 Channels/POVMs added to LIQ<i>Ui</i>|&#x232A;__
 
 We've made a major addition to the available noise models in the system by adding Channels (via Kraus operators) and Generalized Measurement (via POVMs). The Users Manual has a new

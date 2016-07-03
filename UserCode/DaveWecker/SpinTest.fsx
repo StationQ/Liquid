@@ -92,8 +92,6 @@ module SpinTest =
         let hs              = Dictionary<int,float>()
         let Js              = Dictionary<int*int,float>()
         let gammalambda     = [(100,0.0,1.0)]
-        let decohereModel   = []
-        let runonce         = false
         hs.[0]           <- 1.0
         hs.[lst]         <- -1.0
         for i in 0..lst-1 do Js.[(i,i+1)] <- J

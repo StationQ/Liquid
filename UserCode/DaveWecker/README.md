@@ -4,6 +4,7 @@ Examples:
 * [AltOutput.fs](#ALTOUTPUT): QASM output example
 * [QLSA.fsx](#QLSA): Source code for the LIQ<i>Ui</i>|&#x232A; __QLSA() sample
 * [QuAM.fsx](#QuAM) : Source code for the LIQ<i>Ui</i>|&#x232A; __QuAM() sample
+* [SpinTest.fsx](#SpinTest) : Sample source code for the LIQ<i>Ui</i>|&#x232A; __Ferro() sample
 
 ### <a name="ALTOUTPUT"></a>AltOutput.fs
 
@@ -64,3 +65,9 @@ The new APIs are:
 function and was made public for general use.
 * `Ket.Join()` allows two ket vectors (registers) to be joined together. There are other ways around this, but when I re-wrote the `QLSA()` example
 I decided it would be good to expose this internal routine (since `Ket.Split()` is already exposed).
+
+### <a name="SpinTest"></a>SpinTest.fsx
+
+We've had a couple of requests to see an example of how Spin.Test() is implemented. This file contains a complete stand-alone version (simply called `Test()`) that is called from the command line with `Ferro()`. This will run one of the built-in examples (`__Ferro()`) with a frustrated ferromagnetic chain (one end up and the other down). 
+
+You can compile and run the sample with: `\Liquid\bin\Liquid.exe /s SpinTest.fsx Ferro()`

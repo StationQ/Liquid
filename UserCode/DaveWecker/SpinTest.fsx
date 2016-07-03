@@ -31,23 +31,7 @@ module SpinTest =
         let prv     = ref ""
         let tFinal  = List.map (fun x -> match x with a,_ -> a) schedule |> List.max
         if tFinal % res <> 0 then failwith (sprintf "Error in Spin.Test(): time should be a multiple of res=%A" res)
-        let rslts   = SortedDictionary<string,(int*float)>()
   
-        let procrun (run:int) (qs:Qubits) = //this thing handles results
-            sb.Length  <- 0
-            for q in qs do sb.Append q.Bit.v |> ignore
-            let ones        = [for q in qs -> q.Bit.v] |> List.sum
-            let rslt        = sb.ToString()
-            let energy,_    = spin.EnergyExpectation(false, qubits=qs)
-
-            showLog "Final [%5d]: %s (E=%8.4f) [ones=%2d]" run rslt energy ones
-
-            if rslts.ContainsKey rslt then
-                let cnt,e       = rslts.[rslt]
-                rslts.[rslt]   <- (cnt+1,energy)
-            else
-                rslts.[rslt]   <- (1,energy)
-
         spin.Prep()
         spin.trotterN     <- trotter
         spin.time         <- 0
@@ -97,16 +81,8 @@ module SpinTest =
         showLog "Dumping final state:"
         spin.Ket.Dump()
 
-        show "!================"
-        show "!Histogram:"
-        for kvp in rslts do
-            let cnt,energy  = kvp.Value
-            let ones        = [for i in 0..kvp.Key.Length-1 -> if kvp.Key.[i] = '1' then 1 else 0] |> List.sum
-            show "!%4.1f%% %s (E=%8.4f) [ones=%2d]" 
-                 (100.0 * float cnt) kvp.Key energy ones
-
     [<LQD>]
-    let __SpinTestFerro() =
+    let Ferro() =
         let sCnt            = 12
         let h0              = 0.0
         let hn              = 0.0

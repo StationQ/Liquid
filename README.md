@@ -52,7 +52,7 @@ LIQ<i>Ui</i>|&#x232A; is available under a [Microsoft Research license](LICENSE.
 
 ## For More Information
 
-See the [Microsoft Research project page on LIQ<i>Ui</i>|&#x232A;](http://research.microsoft.com/en-us/projects/liquid/)
+See the [StationQ website](http://www.StationQ.com)
 and the paper, [LIQ<i>Ui</i>|&#x232A;: A Software Design Architecture and Domain-Specific Language for Quantum Computing](http://research.microsoft.com/pubs/209634/1402.4467.pdf).
 
 To stay up to date on what we're doing with LIQ<i>Ui</i>|&#x232A;, please watch our repository and sign up for the LIQ<i>Ui</i>|&#x232A; email list.

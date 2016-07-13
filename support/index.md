@@ -4,7 +4,8 @@ title: How to get help?
 ---
 
 # Stuck?
-If you need help there are a few ways you can connect with the team and seek out assistance.
+If you need help there are a few ways you can connect with the team and seek out assistance. The best place to start is at our 
+[Home Page for StationQ](http://www.StationQ.com)
 
 ## Mailing List
 We strongly suggest that you subscribe to our low-volume mailing list to get useful (and timely) information.

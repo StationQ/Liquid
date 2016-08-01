@@ -86,6 +86,10 @@ ints is the number of ints used to represent the bits (`(n >>> 5) + 1`)
 
 `Tableau.fsx` has a complete implementation of `ShowState` and is demonstrated dumping the tableau for Teleport.
 
+The elements of the xs, zs, and rs arrays are all mutable, so this property may also be used to set the tableau state; 
+the showState function shows how stabilizers are represented in the arrays. 
+Note that the contents of these arrays are not validated as they are set, so it is possible to create an invalid tableau this way.
+
 Note: I have _not_ added the Tableau API to the docs (for now). This is a very specialized call and (I believe) it isn't of great use to most users.
 
 You can compile and run the sample with: `\Liquid\bin\Liquid.exe /s Tableau.fsx Tableau()`

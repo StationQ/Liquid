@@ -130,3 +130,7 @@ Note that this version of LIQ<i>Ui</i>|&#x232A; is limited to a maximum of 23 ph
 
 If you run into a problem or have a question, you can [post an issue](https://github.com/StationQ/Liquid/issues).
 If you have other feedback, you can contact the LIQ<i>Ui</i>|&#x232A; team at liquid@microsoft.com.
+
+---
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

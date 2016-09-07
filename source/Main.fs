@@ -23,7 +23,7 @@ module UserSample =
                     let phi     = theta / 2.0
                     let c       = Math.Cos phi
                     let s       = Math.Sin phi
-                    CSMat(2,[0,0,c,0.;0,1,-s,0.;1,0,s,0.;1,1,c,0.])),
+                    CSMat(2,[0,0,c,0.;0,1,0.,-s;1,0,0.,-s;1,1,c,0.])),
                 Draw    = "\\gate{" + nam + "}"
                 )
         (gate theta).Run qs

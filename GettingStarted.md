@@ -233,6 +233,7 @@ along with any required supporting DLLs, into one of the valid directories.
     $ cd /Liquid/linux
     $ mono Liquid.exe
     ```
+    If you get a "Missing method .ctor" error, your Mono installation may not have the F# libraries properly in your LD_LIBRARY_PATH. The easiest way to address this is to copy FSharpCode.dll and FSharpCode.xml from the Windows   LIQ<i>Ui</i>|&#x232A;   distribution into the directory with Liquid.exe.
     
 1. This will run LIQ<i>Ui</i>|&#x232A; and if all is well, will ask for you to accept the license. Type a **Y** (followed by Enter) to accept. Now try running a simulation:
     

@@ -45,7 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Liquid1">
-      <HintPath>..\bin\Liquid1.dll</HintPath>
+      <HintPath>..\lib\Liquid1.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -71,7 +71,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\LiquidAzure.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\LiquidAzure.xml</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
     <StartArguments>__Shor(15,true)</StartArguments>
     <PlatformTarget>x64</PlatformTarget>
@@ -83,7 +83,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\LiquidAzure.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\LiquidAzure.xml</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
     <PlatformTarget>x64</PlatformTarget>
     <StartArguments>__Shor(15,true)</StartArguments>

@@ -2,6 +2,7 @@ build:
 	xbuild source/Liquid.sln
 
 clean:
+	find . -name Liquid.log -type f -delete
 	rm -rf source/bin source/obj
 
 example:

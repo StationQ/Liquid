@@ -4,8 +4,8 @@ build:
 clean:
 	rm -rf source/bin source/obj
 
-example: build
-	mono source/bin/Debug/Liquid.exe "__Shor(15,true)"
+example:
+	mono bin/Liquid.exe "__Shor(15,true)"
 
 .PHONY: build clean example
 

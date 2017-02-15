@@ -40,7 +40,7 @@ There are three ways to download LIQ<i>Ui</i>|&#x232A;:
 * Click on the button on the main project page to the right labeled **Download ZIP**. This will download LIQ<i>Ui</i>|&#x232A; and its supporting files to your system in a file named Liquid-master.zip, which you may then extract to a folder on your system. If you extract into C:\  you will now have a root folder named Liquid-master. Rename the folder to C:\Liquid and you're done.
 * If you have a GitHub command-line client installed, you may instead change directory to the c:\Liquid directory and use the command:
 ```
-git clone https://github.com/msr-quarc/Liquid
+git clone https://github.com/StationQ/Liquid
 ```
 * If you have the GitHub desktop application installed, you may click on the button on the main project page to the right labeled **Clone in Desktop**.
 
@@ -62,7 +62,7 @@ You should see:
 0:0000.0/===================================================================================================
 0:0000.0/=    The Language-Integrated Quantum Operations (LIQUi|>) Simulator                               =
 0:0000.0/=    is made available under license by Microsoft Corporation                                     =
-0:0000.0/=    License terms may be viewed at https://github.com/msr-quarc/Liquid/blob/master/LICENSE.md    =
+0:0000.0/=    License terms may be viewed at https://github.com/StationQ/Liquid/blob/master/LICENSE.md    =
 0:0000.0/=    Please type Y, followed by return, to indicate your acceptance of these terms                =
 0:0000.0/===================================================================================================
 ```
@@ -88,7 +88,7 @@ You should see the following:
 0:0000.0/=    The Language-Integrated Quantum Operations (LIQUi|>) Simulator                       =
 0:0000.0/=        Copyright (c) 2015,2016 Microsoft Corporation                                    =
 0:0000.0/=        If you use LIQUi|> in your research, please follow the guidelines at             =
-0:0000.0/=        https://github.com/msr-quarc/Liquid for citing LIQUi|> in your publications.     =
+0:0000.0/=        https://github.com/StationQ/Liquid for citing LIQUi|> in your publications.     =
 0:0000.0/===========================================================================================
 0:0000.0/
 0:0000.0/
@@ -157,7 +157,7 @@ you should see:
 0:0000.0/=    The Language-Integrated Quantum Operations (LIQUi|>) Simulator                       =
 0:0000.0/=        Copyright (c) 2015,2016 Microsoft Corporation                                    =
 0:0000.0/=        If you use LIQUi|> in your research, please follow the guidelines at             =
-0:0000.0/=        https://github.com/msr-quarc/Liquid for citing LIQUi|> in your publications.     =
+0:0000.0/=        https://github.com/StationQ/Liquid for citing LIQUi|> in your publications.     =
 0:0000.0/===========================================================================================
 0:0000.0/
 0:0000.0/
@@ -272,7 +272,7 @@ along with any required supporting DLLs, into one of the valid directories.
 These instructions were originally written and tested on OSX El Capitan 10.11.2 by vsinha (*thanks!* from the LIQ<i>Ui</i>|&#x232A; team). Latest update was tested on 10.11.3.
 
 1. Install mono and [F#](http://fsharp.org/use/mac/) for OSX [from here](http://www.mono-project.com/download/), we've tested the 'universal' version.
-2. Download the Zip file from the LIQ<i>Ui</i>|&#x232A; [git repository](https://github.com/msr-quarc/Liquid).
+2. Download the Zip file from the LIQ<i>Ui</i>|&#x232A; [git repository](https://github.com/StationQ/Liquid).
 3. You'll find `Liquid-master` in your Downloads, open the folder.
 4. Type `Command-A` `Command-C` to select all the files and copy them.
 5. Type `Shift-Command-G` and then a slash (`/`) to go to the root.

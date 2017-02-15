@@ -99,7 +99,7 @@ TIP: You can use an existing email address for this, if you want, such as your i
 0:0000.0/=    The Language-Integrated Quantum Operations (LIQUi|>) Simulator                       =
 0:0000.0/=        Copyright (c) 2015,2016 Microsoft Corporation                                    =
 0:0000.0/=        If you use LIQUi|> in your research, please follow the guidelines at             =
-0:0000.0/=        https://github.com/msr-quarc/Liquid for citing LIQUi|> in your publications.     =
+0:0000.0/=        https://github.com/StationQ/Liquid for citing LIQUi|> in your publications.     =
 0:0000.0/===========================================================================================
 0:0000.0/
 0:0000.0/=============== Logging to: Liquid.log opened ================

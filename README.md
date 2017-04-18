@@ -1,6 +1,11 @@
 # The Language-Integrated Quantum Operations (LIQ<i>Ui</i>|&#x232A;) simulator
 
 ## News
+
+__2017/04/18 Drawing Shor Circuits__
+
+We had a request for renderings of the circuits used by the **__Shor()** command. There is now a zipped file of all the circuits in both HTML and LaTeX in [UserCode\DaveWecker](UserCode\DaveWecker) as **Shor_Render.7z**
+
 __2016/07/02 Sample implementation of Spin.Test and Stabilizer.ShowState released__
 
 In UserCode\DaveWecker there are two new releases of sample implementations. The first shows how to implement the Spin.Test routine that's caled by the `__Ferro()` example in LIQ<i>Ui</i>\|&#x232A;. There's also a new property on stabilizers called `Tableau` which will return the current (raw) stabilizers. See the `Tableau.fsx` sample in the same directory for further information. The [README.md](UserCode/DaveWecker/README.md) file is a good place to start.

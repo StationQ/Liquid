@@ -4,7 +4,7 @@
 
 __2017/04/18 Drawing Shor Circuits__
 
-We had a request for renderings of the circuits used by the **__Shor()** command. There is now a zipped file of all the circuits in both HTML and LaTeX in [UserCode\DaveWecker](UserCode\DaveWecker) as **Shor_Render.7z**
+We had a request for renderings of the circuits used by the **__Shor()** command. There is now a zipped file of all the circuits in both HTML and LaTeX in [UserCode/DaveWecker](UserCode/DaveWecker) as **Shor_Render.7z**
 
 __2016/07/02 Sample implementation of Spin.Test and Stabilizer.ShowState released__
 

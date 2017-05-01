@@ -1,6 +1,9 @@
-# Ignore all bin and obj folders
-*/bin
-*/obj
+# Build folders
+source/bin
+source/obj
+
+# Visual Studio
+source/.vs
 
 # Ignore log files
 Liquid.log

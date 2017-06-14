@@ -2985,6 +2985,12 @@
  <param name="kAdd">ket to add at the end</param>
  <returns>Resulting ket</returns>
 </member>
+<member name="M:Microsoft.Research.Liquid.Ket.Free(Microsoft.Research.Liquid.Qubit)">
+ <summary>
+ Frees a qubit from the state vector (will be measured if it isn't already).
+ </summary>
+ <param name="q">Qubit to free.</param>
+</member>
 <member name="M:Microsoft.Research.Liquid.Ket.EvalOp(Microsoft.Research.Liquid.CSMat,Microsoft.FSharp.Collections.FSharpList{Microsoft.Research.Liquid.Qubit})">
  <summary>
  Evaluate an operation (Qubits come in in operator order (high to low))
@@ -3033,16 +3039,6 @@
  The default is to output the complex amplitude for each state.</param>
  <param name="doSort">An option that, if true, causes the output to be sorted in qubit ID order.
  The default is to sort the output.</param>
-</member>
-<member name="M:Microsoft.Research.Liquid.Ket.Decohere(Microsoft.FSharp.Core.FSharpFunc{Microsoft.Research.Liquid.Qubit,System.Boolean})">
- <summary>
- Applies a function to each Qubit in the state vector, returning the list of
- qubit IDs for which the function returned true.
- This method is usually used to apply noise to the state.
- </summary>
- <param name="decohere">The function to apply to each qubit.
- This function is allowed to modify the state of the qubit.</param>
- <returns>The list of qubits where the function returned true</returns>
 </member>
 <member name="M:Microsoft.Research.Liquid.Ket.Copy">
  <summary>
@@ -4206,14 +4202,16 @@
 </member>
 <member name="P:Microsoft.Research.Liquid.Stabilizer.Tableau">
  <summary>
- Get the internal data in the tableau:
-   n             : Number of qubits represented
-   ints          : number of ints used to represent the bits = (n >>> 5) + 1
-   rs[2*n+1]     : 0=+1 1=+i 2=-1 3=-i
-   xs[2*n+1,ints]: X stablizer values
-   zs[2*n+1,ints]: X stablizer values
+ Gets the internal data in the tableau:
+ <ul>
+ <li>n: Number of qubits represented</li>
+ <li>ints: number of ints used to represent the bits = (n >>> 5) + 1</li>
+ <li>rs[2*n+1]: 0=+1 1=+i 2=-1 3=-i</li>
+ <li>xs[2*n+1,ints]: X stablizer values</li>
+ <li>zs[2*n+1,ints]: Z stablizer values</li>
+ </ul>
  </summary>
- <returns>A tuple: n,rs,xs,zs</returns>
+ <returns>A tuple containing n, rs, xs, and zs.</returns>
 </member>
 <member name="P:Microsoft.Research.Liquid.Stabilizer.Item(System.Int32)">
  <summary>

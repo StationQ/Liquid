@@ -2,6 +2,10 @@
 
 ## News
 
+__2017/06/14 Fixed scripts on Linux and OSX__
+
+A recent upgrade to .Net (from 4.5.1 to 4.6.1) made it impossible to incrementaly load scripts that were compiled with `/S` on Linux or OSX (compiling with 4.6.1 and loading into a 4.5.1 app). We have updated the kit so that LIQ<i>Ui</i>|&#x232A; is now built with 4.6.1 and incremental script loading should now work with the version on the web site. 
+
 __2017/04/18 Drawing Shor Circuits__
 
 We had a request for renderings of the circuits used by the **__Shor()** command. There is now a zipped file of all the circuits in both HTML and LaTeX in [UserCode/DaveWecker](UserCode/DaveWecker) as **Shor_Render.7z**

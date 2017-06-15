@@ -4,7 +4,7 @@
 
 __2017/06/14 Fixed scripts on Linux and OSX__
 
-A recent upgrade to .Net (from 4.5.1 to 4.6.1) made it impossible to incrementaly load scripts that were compiled with `/S` on Linux or OSX (compiling with 4.6.1 and loading into a 4.5.1 app). We have updated the kit so that LIQ<i>Ui</i>|&#x232A; is now built with 4.6.1 and incremental script loading should now work with the version on the web site. 
+A recent change to FSharp on Linux and OSX made it impossible to incrementaly load scripts that were compiled with `/S`. We have updated the kit so that the linux directory now contains private copies of `FSharp.Core.*` which should fix the problem. 
 
 __2017/04/18 Drawing Shor Circuits__
 

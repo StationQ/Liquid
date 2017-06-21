@@ -70,11 +70,16 @@ module AltOutput =
             sb.Length <- 0
         
         let outGate (g:Gate) (ws:int list) (pfx:bool) =         // Output a gate
-            if pfx then sprintf "%8s    " ("c-" + (mapName g.Name)) |> app
-            else        sprintf "%8s    " (mapName g.Name) |> app
+            let arity   =
+                if pfx then // Binary controlled gate 
+                    sprintf "%8s    " ("c-" + (mapName g.Name)) |> app
+                    g.Arity+1
+                else        
+                    sprintf "%8s    " (mapName g.Name) |> app
+                    g.Arity
 
             // We could be handed a qubit list of any size... need to prune to real length for this gate
-            let ws = Seq.take g.Arity ws |> Seq.toList
+            let ws = Seq.take arity ws |> Seq.toList
             appWs ws true
             out()
 

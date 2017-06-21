@@ -2,6 +2,10 @@
 
 ## News
 
+__2017/06/21 Bug fixed in UserCode/DaveWecker/AltOutput.fs__
+
+User thiennm noted that classically controlled gates were dropping a qubit in the QASM output (see the Teleport example). His suggested fix has been adopted. Thanks!
+
 __2017/06/14 Fixed scripts on Linux and OSX__
 
 A recent change to FSharp on Linux and OSX made it impossible to incrementaly load scripts that were compiled with `/S`. We have updated the kit so that the linux directory now contains private copies of `FSharp.Core.*` which should fix the problem. 

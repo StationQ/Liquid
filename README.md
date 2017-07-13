@@ -2,6 +2,10 @@
 
 ## News
 
+__2017/07/13 Re-compiled for VS 2017__
+ 
+User Brandon Langenberg at FAU discovered that any compilations done with VS 2017 will not work with the shipped bits (since they were built with VS 2015). We have re-compiled all the binaries and have moved to F# 4.1 (FSharp.Core 4.4.1.0) along with .Net Framework 4.6.1.
+
 __2017/06/21 Bug fixed in UserCode/DaveWecker/AltOutput.fs__
 
 User thiennm noted that classically controlled gates were dropping a qubit in the QASM output (see the Teleport example). His suggested fix has been adopted. Thanks!

@@ -2,6 +2,10 @@
 
 ## News
 
+__2017/09/26 Announcement of Microsoft Quantum__
+ 
+With the [Microsoft Ignite](https://www.youtube.com/watch?v=N3csr3fXBfo) announcement of our broader quantum effort yesterday, I'd encourage members of the list to sign up for the new Microsoft quarterly [Quantum Newsletter](https://info.microsoft.com/Quantum-Computing-Newsletter-Signup.html) for the latest information on our complete software stack for quantum computing.
+
 __2017/07/13 Re-compiled for VS 2017__
  
 User Brandon Langenberg at FAU discovered that any compilations done with VS 2017 will not work with the shipped bits (since they were built with VS 2015). We have re-compiled all the binaries and have moved to F# 4.1 (FSharp.Core 4.4.1.0) along with .Net Framework 4.6.1.

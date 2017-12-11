@@ -2,6 +2,10 @@
 
 ## News
 
+__2017/12/11 Updated Binaries__
+ 
+We are very happy to annouce the availability of the [Microsoft Quantum Development Kit (Preview)](https://www.microsoft.com/en-us/quantum/development-kit). There is a nice [blog entry](https://blogs.microsoft.com/ai/2017/12/11/future-quantum-microsoft-releases-free-preview-quantum-development-kit/) for details if you'd like to read more. The release contains a new language (Q#), compiler, simulators, examples, libraries (in source form) and full documentation. There is also a video walk through showing quantum code samples as part of the [Microsoft Mechanics(https://www.youtube.com/watch?v=v7b4J2INq9c) series.
+
 __2017/11/03 Updated Binaries__
  
 The latest version of Visual Studio/.Net/FSharp (2017) is incompatible with the binaries we've previously shipped for LIQ<i>Ui</i>\|&#x232A;. All the compiled examples will work, but new code or compiling from scripts will fail. The current version on the Github site has been updated to fix this. Following the [Getting Started](http://stationq.github.io/Liquid/getting-started/) is the easiest way to re-install everything. If you already have a version of VS2017, then you can skip that piece.

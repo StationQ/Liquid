@@ -2,7 +2,7 @@
 
 ## News
 
-__2017/12/11 Updated Binaries__
+__2017/12/11 Microsoft Quantum Development Kit (Preview) released__
  
 We are very happy to annouce the availability of the [Microsoft Quantum Development Kit (Preview)](https://www.microsoft.com/en-us/quantum/development-kit). There is a nice [blog entry](https://blogs.microsoft.com/ai/2017/12/11/future-quantum-microsoft-releases-free-preview-quantum-development-kit/) for details if you'd like to read more. The release contains a new language (Q#), compiler, simulators, examples, libraries (in source form) and full documentation. There is also a video walk through showing quantum code samples as part of the [Microsoft Mechanics(https://www.youtube.com/watch?v=v7b4J2INq9c) series.
 

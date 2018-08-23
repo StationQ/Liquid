@@ -1,6 +1,35 @@
 # The Language-Integrated Quantum Operations (LIQ<i>Ui</i>|&#x232A;) simulator
 
 ## News
+
+__2017/12/11 Microsoft Quantum Development Kit (Preview) released__
+ 
+We are very happy to announce the availability of the [Microsoft Quantum Development Kit (Preview)](https://www.microsoft.com/en-us/quantum/development-kit). There is a nice [blog entry](https://blogs.microsoft.com/ai/2017/12/11/future-quantum-microsoft-releases-free-preview-quantum-development-kit/) for details if you'd like to read more. The release contains a new language (Q#), compiler, simulators, examples, libraries (in source form) and full documentation. There is also a video walk through showing quantum code samples as part of the [Microsoft Mechanics](https://www.youtube.com/watch?v=v7b4J2INq9c) series.
+
+__2017/11/03 Updated Binaries__
+ 
+The latest version of Visual Studio/.Net/FSharp (2017) is incompatible with the binaries we've previously shipped for LIQ<i>Ui</i>\|&#x232A;. All the compiled examples will work, but new code or compiling from scripts will fail. The current version on the Github site has been updated to fix this. Following the [Getting Started](http://stationq.github.io/Liquid/getting-started/) is the easiest way to re-install everything. If you already have a version of VS2017, then you can skip that piece.
+
+__2017/09/26 Announcement of Microsoft Quantum__
+ 
+With the [Microsoft Ignite](https://www.youtube.com/watch?v=N3csr3fXBfo) announcement of our broader quantum effort yesterday, I'd encourage members of the list to sign up for the new Microsoft quarterly [Quantum Newsletter](https://info.microsoft.com/Quantum-Computing-Newsletter-Signup.html) for the latest information on our complete software stack for quantum computing.
+
+__2017/07/13 Re-compiled for VS 2017__
+ 
+User Brandon Langenberg at FAU discovered that any compilations done with VS 2017 will not work with the shipped bits (since they were built with VS 2015). We have re-compiled all the binaries and have moved to F# 4.1 (FSharp.Core 4.4.1.0) along with .Net Framework 4.6.1.
+
+__2017/06/21 Bug fixed in UserCode/DaveWecker/AltOutput.fs__
+
+User thiennm noted that classically controlled gates were dropping a qubit in the QASM output (see the Teleport example). His suggested fix has been adopted. Thanks!
+
+__2017/06/14 Fixed scripts on Linux and OSX__
+
+A recent change to FSharp on Linux and OSX made it impossible to incrementaly load scripts that were compiled with `/S`. We have updated the kit so that the linux directory now contains private copies of `FSharp.Core.*` which should fix the problem. 
+
+__2017/04/18 Drawing Shor Circuits__
+
+We had a request for renderings of the circuits used by the **__Shor()** command. There is now a zipped file of all the circuits in both HTML and LaTeX in [UserCode/DaveWecker](UserCode/DaveWecker) as **Shor_Render.7z**
+
 __2016/07/02 Sample implementation of Spin.Test and Stabilizer.ShowState released__
 
 In UserCode\DaveWecker there are two new releases of sample implementations. The first shows how to implement the Spin.Test routine that's caled by the `__Ferro()` example in LIQ<i>Ui</i>\|&#x232A;. There's also a new property on stabilizers called `Tableau` which will return the current (raw) stabilizers. See the `Tableau.fsx` sample in the same directory for further information. The [README.md](UserCode/DaveWecker/README.md) file is a good place to start.

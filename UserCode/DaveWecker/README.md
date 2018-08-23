@@ -6,6 +6,7 @@ Examples:
 * [QuAM.fsx](#QuAM) : Source code for the LIQ<i>Ui</i>|&#x232A; `__QuAM()` sample
 * [SpinTest.fsx](#SpinTest) : Sample source code for the LIQ<i>Ui</i>|&#x232A; `__Ferro()` sample
 * [Tableau.fsx](#Tableau) : Sample LIQ<i>Ui</i>|&#x232A; stabilizer `ShowState()` implementation using the new `Tableau` property
+* [Shor_Render.7z](Shor_Render.7z): This is a collection of drawings in both HTML and LaTeX of the sub-circuits used in the **__Shor()** command
 
 ### <a name="ALTOUTPUT"></a>AltOutput.fs
 
